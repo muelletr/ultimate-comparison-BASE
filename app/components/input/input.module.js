@@ -13,7 +13,6 @@ const platform_browser_1 = require('@angular/platform-browser');
 const angular2_select_1 = require('angular2-select');
 const select2_component_1 = require('./components/select2.component');
 const select_component_1 = require('./components/select.component');
-const paper_checkbox_directive_1 = require('./directives/paper-checkbox.directive');
 let InputModule = class InputModule {
 };
 InputModule = __decorate([
@@ -24,13 +23,11 @@ InputModule = __decorate([
         ],
         exports: [
             select_component_1.SelectComponent,
-            select2_component_1.Select2Component,
-            paper_checkbox_directive_1.PaperChechboxDirective
+            select2_component_1.Select2Component
         ],
         declarations: [
             select_component_1.SelectComponent,
-            select2_component_1.Select2Component,
-            paper_checkbox_directive_1.PaperChechboxDirective
+            select2_component_1.Select2Component
         ],
         providers: [],
         schemas: [core_1.CUSTOM_ELEMENTS_SCHEMA]

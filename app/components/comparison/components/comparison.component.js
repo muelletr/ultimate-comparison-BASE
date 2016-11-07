@@ -9,13 +9,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 const core_1 = require('@angular/core');
-const saveAs = require('file-saver');
 const index_1 = require('../shared/index');
-const index_2 = require('../../modaldialog/index');
 const comparison_config_service_1 = require('./comparison-config.service');
 const comparison_data_service_1 = require('./comparison-data.service');
 const comparison_service_1 = require('./comparison.service');
 const comparison_citation_service_1 = require('./comparison-citation.service');
+var FileSaver = require('file-saver');
 let ComparisonComponent = class ComparisonComponent {
     constructor(serv, dataServ, confServ, citationServ, cd) {
         this.serv = serv;
@@ -95,8 +94,7 @@ let ComparisonComponent = class ComparisonComponent {
         let content = this.latexTable.nativeElement.textContent;
         content = content.substr(content.indexOf('%'), content.length);
         let blob = new Blob([content], { type: 'plain/text' });
-        let s = saveAs;
-        saveAs(blob, "latextable.tex");
+        FileSaver(blob, "latextable.tex");
         return window.URL.createObjectURL(blob);
     }
     previewLatexTable(show) {
@@ -110,11 +108,11 @@ let ComparisonComponent = class ComparisonComponent {
 };
 __decorate([
     core_1.ViewChild('details'), 
-    __metadata('design:type', index_2.ModalDialogComponent)
+    __metadata('design:type', Object)
 ], ComparisonComponent.prototype, "detailsModal", void 0);
 __decorate([
     core_1.ViewChild('settings'), 
-    __metadata('design:type', index_2.ModalDialogComponent)
+    __metadata('design:type', Object)
 ], ComparisonComponent.prototype, "settingsModal", void 0);
 __decorate([
     core_1.ViewChild('latextable'), 
@@ -124,7 +122,7 @@ ComparisonComponent = __decorate([
     core_1.Component({
         selector: 'comparison',
         templateUrl: '../templates/comparison.template.html',
-        styleUrls: ['../styles/style.css'],
+        styleUrls: ['../styles/comparison.component.css'],
         changeDetection: core_1.ChangeDetectionStrategy.OnPush,
         moduleId: module.id
     }), 

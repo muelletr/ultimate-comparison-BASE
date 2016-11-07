@@ -49,6 +49,9 @@ Select2Component = __decorate([
     core_1.Component({
         selector: 'select2',
         templateUrl: '../templates/select2.template.html',
+        styleUrls: [
+            './select2.component.css'
+        ],
         moduleId: module.id
     }), 
     __metadata('design:paramtypes', [])

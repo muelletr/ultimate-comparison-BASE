@@ -56,7 +56,7 @@ ComparisonDetailsComponent = __decorate([
     core_1.Component({
         selector: 'comparison-details',
         templateUrl: '../templates/comparison-details.template.html',
-        styleUrls: ['../styles/style.css'],
+        styleUrls: ['../styles/comparison-details.component.css'],
         moduleId: module.id
     }), 
     __metadata('design:paramtypes', [comparison_service_1.ComparisonService, comparison_data_service_1.ComparisonDataService, comparison_config_service_1.ComparisonConfigService, comparison_citation_service_1.ComparisonCitationService])

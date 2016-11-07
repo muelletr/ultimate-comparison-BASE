@@ -11,13 +11,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 const core_1 = require('@angular/core');
 const platform_browser_1 = require('@angular/platform-browser');
 const http_1 = require('@angular/http');
-const angular2_polymer_1 = require('@vaadin/angular2-polymer');
 const comparison_details_component_1 = require('./comparison-details.component');
 const comparison_footnote_component_1 = require('./comparison-footnote.component');
 const comparison_component_1 = require('./comparison.component');
 const index_pipes_1 = require('../pipes/index.pipes');
 const input_module_1 = require('../../input/input.module');
-const index_1 = require('../../modaldialog/index');
+// "Polymer" Module (Polymer to Angular2 Conversion Components)
+const polymer_module_1 = require('../../polymer/polymer.module');
 // Provider imports
 const platform_browser_2 = require('@angular/platform-browser');
 const comparison_service_1 = require('./comparison.service');
@@ -30,9 +30,9 @@ ComparisonModule = __decorate([
     core_1.NgModule({
         imports: [
             platform_browser_1.BrowserModule,
-            index_1.ModalDialogModule,
             http_1.HttpModule,
-            input_module_1.InputModule
+            input_module_1.InputModule,
+            polymer_module_1.PolymerModule
         ],
         exports: [
             comparison_component_1.ComparisonComponent
@@ -41,18 +41,7 @@ ComparisonModule = __decorate([
             comparison_component_1.ComparisonComponent,
             comparison_details_component_1.ComparisonDetailsComponent,
             comparison_footnote_component_1.ComparisonFootnoteComponent,
-            ...index_pipes_1.COMPARISON_PIPES,
-            angular2_polymer_1.PolymerElement('paper-header-panel'),
-            angular2_polymer_1.PolymerElement('paper-button'),
-            angular2_polymer_1.PolymerElement('paper-dialog'),
-            angular2_polymer_1.PolymerElement('paper-toolbar'),
-            angular2_polymer_1.PolymerElement('paper-card'),
-            angular2_polymer_1.PolymerElement('paper-listbox'),
-            angular2_polymer_1.PolymerElement('paper-item'),
-            angular2_polymer_1.PolymerElement('paper-checkbox'),
-            angular2_polymer_1.PolymerElement('paper-tooltip'),
-            angular2_polymer_1.PolymerElement('iron-icon'),
-            angular2_polymer_1.PolymerElement('paper-icon-button'),
+            ...index_pipes_1.COMPARISON_PIPES
         ],
         providers: [
             comparison_service_1.ComparisonService,
@@ -61,8 +50,7 @@ ComparisonModule = __decorate([
             comparison_citation_service_1.ComparisonCitationService,
             ...index_pipes_1.COMPARISON_PIPES,
             platform_browser_2.Title
-        ],
-        schemas: [core_1.CUSTOM_ELEMENTS_SCHEMA]
+        ]
     }), 
     __metadata('design:paramtypes', [])
 ], ComparisonModule);
