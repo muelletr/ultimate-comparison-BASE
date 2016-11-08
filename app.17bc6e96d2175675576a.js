@@ -377,10 +377,12 @@ webpackJsonp([0],[
 	        this.convertChilds();
 	    }
 	    convertChilds() {
-	        this.htmlChilds = this.converter.makeHtml(this.plainChilds.replace(/^[\s]{3}/gm, ""));
-	        if (this.htmlChilds) {
-	            this.latexChilds = this.htmlChilds.replace(/[\s]{2}/gm, " ");
-	            this.latexChilds = this.latexChilds.replace(/[\s]/gm, " ");
+	        if (this.plainChilds != "") {
+	            this.htmlChilds = this.converter.makeHtml(this.plainChilds.replace(/^[\s]{3}/gm, ""));
+	            if (this.htmlChilds) {
+	                this.latexChilds = this.htmlChilds.replace(/[\s]{2}/gm, " ");
+	                this.latexChilds = this.latexChilds.replace(/[\s]/gm, " ");
+	            }
 	        }
 	    }
 	    getLabel() {
@@ -10459,13 +10461,13 @@ webpackJsonp([0],[
 /* 86 */
 /***/ function(module, exports) {
 
-	module.exports = "<ng-content></ng-content>\n<div class=\"ptooltiptext\" *ngIf=\"tooltip!=''||tooltipHtml!=''\">\n   {{tooltip}}\n   <div [innerHtml]=\"_sanitizer.bypassSecurityTrustHtml(tooltipHtml)\"></div>\n</div>";
+	module.exports = "<ng-content></ng-content>\n<div class=\"ptooltiptext\" *ngIf=\"tooltip&&tooltip!=''||tooltipHtml&&tooltipHtml!=''\">\n   {{tooltip}}\n   <div [innerHtml]=\"_sanitizer.bypassSecurityTrustHtml(tooltipHtml)\"></div>\n</div>";
 
 /***/ },
 /* 87 */
 /***/ function(module, exports) {
 
-	module.exports = ":host {\n    position: relative;\n    display: inline-block;\n}\n\n:host .ptooltiptext {\n    visibility: hidden;\n    min-width: 60px;\n    background-color: black;\n    color: #fff;\n    text-align: center;\n    padding: 5px;\n    border-radius: 6px;\n    \n    position:absolute;\n    z-index: 1;\n    \n    white-space: nowrap;\n    \n    transition-property: visibility;\n    transition-duration: 0.1s;\n}\n\n:host:hover .ptooltiptext {\n    visibility: visible;\n}\n\n:host .ptooltiptext::after {\n    content: \" \";\n    position: absolute;\n    border-width: 5px;\n    border-style: solid;\n}\n\n/* north */\n:host.n .ptooltiptext {\n    bottom: 115%;\n    left: -25%;\n    margin-left: 1em;\n    margin-top: 0;\n}\n\n:host.n .ptooltiptext::after {\n    top: 100%;\n    left: 1em;\n    margin-left: -5px;\n    border-color: black transparent transparent transparent;\n}   \n\n/* south */\n:host.s .ptooltiptext {\n    top: 115%;\n    left: -25%;\n    margin-left: 1em;\n}\n\n:host.s .ptooltiptext::after {\n    bottom: 100%;\n    left: 1em;\n    margin-left: -5px;\n    border-color: transparent transparent black transparent;\n}   \n\n/* east */\n:host.e .ptooltiptext {\n    top: 0;\n    left: 100%;\n    margin-left: 5px;\n}\n\n:host.e .ptooltiptext::after {\n    top: 1em;\n    right: 100%; /* To the left of the tooltip */\n    margin-top: -5px;\n    border-color: transparent black transparent transparent;\n} \n\n/* west */\n:host.w .ptooltiptext {\n    top: 0;\n    right: 100%;\n    margin-right: 5px;\n}\n\n:host.w .ptooltiptext::after {\n    top: 1em;\n    left:100%;\n    margin-top: -5px;\n    border-color: transparent transparent transparent black;\n}   \n\n"
+	module.exports = ":host {\n    position: relative;\n    display: inline-block;\n}\n\n:host .ptooltiptext {\n    visibility: hidden;\n    min-width: 60px;\n    background-color: black;\n    color: #fff;\n    text-align: center;\n    padding: 5px;\n    border-radius: 6px;\n    \n    position:absolute;\n    z-index: 1;\n    \n    white-space: nowrap;\n    \n    transition-property: visibility;\n    transition-duration: 0.1s;\n}\n\n\n:host .ptooltiptext >>> ul, :host .ptooltiptext >>> ol {\n    text-align: left;\n    padding-left: 20px;\n}\n\n\n:host:hover .ptooltiptext {\n    visibility: visible;\n}\n\n:host .ptooltiptext::after {\n    content: \" \";\n    position: absolute;\n    border-width: 5px;\n    border-style: solid;\n}\n\n/* north */\n:host.n .ptooltiptext {\n    bottom: 115%;\n    left: -25%;\n    margin-left: 1em;\n    margin-top: 0;\n}\n\n:host.n .ptooltiptext::after {\n    top: 100%;\n    left: 1em;\n    margin-left: -5px;\n    border-color: black transparent transparent transparent;\n}   \n\n/* south */\n:host.s .ptooltiptext {\n    top: 115%;\n    left: -25%;\n    margin-left: 1em;\n}\n\n:host.s .ptooltiptext::after {\n    bottom: 100%;\n    left: 1em;\n    margin-left: -5px;\n    border-color: transparent transparent black transparent;\n}   \n\n/* east */\n:host.e .ptooltiptext {\n    top: 0;\n    left: 100%;\n    margin-left: 5px;\n}\n\n:host.e .ptooltiptext::after {\n    top: 1em;\n    right: 100%; /* To the left of the tooltip */\n    margin-top: -5px;\n    border-color: transparent black transparent transparent;\n} \n\n/* west */\n:host.w .ptooltiptext {\n    top: 0;\n    right: 100%;\n    margin-right: 5px;\n}\n\n:host.w .ptooltiptext::after {\n    top: 1em;\n    left:100%;\n    margin-top: -5px;\n    border-color: transparent transparent transparent black;\n}   \n\n"
 
 /***/ },
 /* 88 */
@@ -10763,4 +10765,4 @@ webpackJsonp([0],[
 
 /***/ }
 ]);
-//# sourceMappingURL=app.a2518ef2e25967897417.js.map
+//# sourceMappingURL=app.17bc6e96d2175675576a.js.map
