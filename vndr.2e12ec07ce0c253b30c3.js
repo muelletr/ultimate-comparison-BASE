@@ -3,14 +3,12 @@ webpackJsonp([2],[
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	// Angular
 	__webpack_require__(21);
 	__webpack_require__(1);
 	__webpack_require__(3);
 	__webpack_require__(22);
 	__webpack_require__(29);
 	__webpack_require__(378);
-	// RxJS
 	__webpack_require__(408);
 	// Other vendors for example jQuery, Lodash or Bootstrap
 	// You can import js, ts, css, sass, ... 
@@ -75008,4 +75006,4 @@ webpackJsonp([2],[
 
 /***/ }
 ]);
-//# sourceMappingURL=vndr.75074dada103919fb11d.js.map
+//# sourceMappingURL=vndr.2e12ec07ce0c253b30c3.js.map
