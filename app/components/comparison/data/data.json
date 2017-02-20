@@ -315,7 +315,7 @@
       }
     },
     "Showcase 2.0": {
-      "plain": "- red 1\n- red 2\n- green\n    - [@eckertThesisCEP]\n- yellow\n    - yellow property\n- dark blue\n    - [@eckertThesisCEP]\n- grey\n- light blue\n",
+      "plain": "- red 1\n- red 2\n- green\n    - [@eckertThesisCEP]\n- yellow\n    - yellow property\n- dark blue\n    - [@eckertThesisCEP]\n    - more properties\n- grey\n- light blue\n",
       "childs": {
         "0": [
           [
@@ -360,11 +360,17 @@
             {
               "content": "dark blue",
               "plain": "dark blue\n",
-              "plainChilds": "    - [@eckertThesisCEP]\n",
+              "plainChilds": "    - [@eckertThesisCEP]\n    - more properties\n",
               "childs": [
                 {
                   "content": ",[@eckertThesisCEP]",
-                  "plain": "[@eckertThesisCEP]\n",
+                  "plain": "[@eckertThesisCEP]\n    ",
+                  "plainChilds": "",
+                  "childs": []
+                },
+                {
+                  "content": "more properties",
+                  "plain": "more properties\n",
                   "plainChilds": "",
                   "childs": []
                 }
