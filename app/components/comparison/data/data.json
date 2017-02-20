@@ -393,6 +393,33 @@
           "Default long description in __markdown__. - Bibkey example [@Adi:2004:ASM:988145.988150] - [Link example]."
         ]
       }
+    },
+    "Rating": {
+      "plain": "- [5] Template is perfect\n- [1] I don't understand nothing\n- [3] It works\n",
+      "childs": {
+        "0": [
+          [
+            {
+              "content": ",[5] Template is perfect",
+              "plain": "[5] Template is perfect\n",
+              "plainChilds": "",
+              "childs": []
+            },
+            {
+              "content": ",[1] I don't understand nothing",
+              "plain": "[1] I don't understand nothing\n",
+              "plainChilds": "",
+              "childs": []
+            },
+            {
+              "content": ",[3] It works",
+              "plain": "[3] It works\n",
+              "plainChilds": "",
+              "childs": []
+            }
+          ]
+        ]
+      }
     }
   }
 ]
