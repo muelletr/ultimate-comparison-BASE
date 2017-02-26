@@ -875,6 +875,10 @@ webpackJsonp([0],[
 	                                    obj[key].childs[0][0].forEach(item => {
 	                                        let content = item.content;
 	                                        let plainChilds = item.plainChilds;
+	                                        if (item.childs && item.childs.length == 1) {
+	                                            console.log(plainChilds);
+	                                            plainChilds = item.childs[0].plain;
+	                                        }
 	                                        let itm = new index_1.ListItem(content, plainChilds, this.comparisonService.converter);
 	                                        p.list.push(itm);
 	                                    });
@@ -4046,7 +4050,9 @@ webpackJsonp([0],[
 	        }
 	    }
 	    changeDisplayTemplate() {
-	        this.confServ.comparison.displaytemplate = !this.confServ.comparison.displaytemplate;
+	        if (this.confServ.comparison) {
+	            this.confServ.comparison.displaytemplate = !this.confServ.comparison.displaytemplate;
+	        }
 	        this.change();
 	    }
 	};
@@ -13035,4 +13041,4 @@ webpackJsonp([0],[
 
 /***/ }
 ]);
-//# sourceMappingURL=app.fcbf68a89de26d6a29e2.js.map
+//# sourceMappingURL=app.54eddb06990d35cf0d1c.js.map
