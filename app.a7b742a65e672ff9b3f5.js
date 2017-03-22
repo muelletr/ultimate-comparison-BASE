@@ -12900,6 +12900,10 @@ webpackJsonp([0],[
 	        this.orderOptionChange.emit(this.orderOption);
 	    }
 	    displayOrder(value, option) {
+	        if (this.order.length === 0 && this.orderOption.length === 0) {
+	            this.order[this.ctrlCounter] = "tag";
+	            this.orderOption[this.ctrlCounter] = 1;
+	        }
 	        return this.order.findIndex(val => val == value) >= 0 && this.orderOption[this.order.findIndex(val => val == value)] == option;
 	    }
 	};
@@ -13040,4 +13044,4 @@ webpackJsonp([0],[
 
 /***/ }
 ]);
-//# sourceMappingURL=app.0b1ba8b3b17fd13ce0d4.js.map
+//# sourceMappingURL=app.a7b742a65e672ff9b3f5.js.map
