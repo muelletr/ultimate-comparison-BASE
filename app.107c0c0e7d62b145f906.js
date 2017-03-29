@@ -12809,9 +12809,16 @@ webpackJsonp([0],[
 	};
 	const core_1 = __webpack_require__(3);
 	const comparison_citation_service_1 = __webpack_require__(50);
+	const comparison_service_1 = __webpack_require__(48);
 	let HtmlCitationTextComponent = class HtmlCitationTextComponent {
-	    constructor() {
+	    constructor(serv) {
+	        this.serv = serv;
 	        this.description = " ";
+	    }
+	    makeMarkdown(text) {
+	        if (text === null || text === undefined || text === "" || text === " ")
+	            return " ";
+	        return this.serv.converter.makeHtml(text);
 	    }
 	};
 	__decorate([
@@ -12829,17 +12836,17 @@ webpackJsonp([0],[
 	        styles: [__webpack_require__(113)],
 	        changeDetection: core_1.ChangeDetectionStrategy.OnPush
 	    }), 
-	    __metadata('design:paramtypes', [])
+	    __metadata('design:paramtypes', [(typeof (_b = typeof comparison_service_1.ComparisonService !== 'undefined' && comparison_service_1.ComparisonService) === 'function' && _b) || Object])
 	], HtmlCitationTextComponent);
 	exports.HtmlCitationTextComponent = HtmlCitationTextComponent;
-	var _a;
+	var _a, _b;
 
 
 /***/ },
 /* 112 */
 /***/ function(module, exports) {
 
-	module.exports = "<div [innerHtml]=\"description | citation: [citationServ] | sanitizeHtml\" class=\"'description'\"\n     *ngIf=\"description\"></div>\n        ";
+	module.exports = "<div [innerHtml]=\"makeMarkdown(description) | citation: [citationServ] | sanitizeHtml\" class=\"'description'\"\n     *ngIf=\"description\"></div>\n        ";
 
 /***/ },
 /* 113 */
@@ -12868,6 +12875,7 @@ webpackJsonp([0],[
 	    constructor(ar, confServ) {
 	        this.ar = ar;
 	        this.confServ = confServ;
+	        this.counter = 0;
 	        this.display = false;
 	        this.settings = false;
 	        this.columns = new Array();
@@ -12914,6 +12922,10 @@ webpackJsonp([0],[
 	            this.orderOption[this.ctrlCounter] = 1;
 	        }
 	        return this.order.findIndex(val => val == value) >= 0 && this.orderOption[this.order.findIndex(val => val == value)] == option;
+	    }
+	    ngAfterViewChecked() {
+	        const t = $("table.table.table-hover");
+	        t.floatThead();
 	    }
 	    shouldBeShown(data) {
 	        if (this.confServ.comparison && this.confServ.comparison.displayall) {
@@ -13004,7 +13016,7 @@ webpackJsonp([0],[
 /* 115 */
 /***/ function(module, exports) {
 
-	module.exports = "<table class=\"table table-hover\" *ngIf=\"display\">\n    <thead>\n    <tr>\n        <template ngFor let-column [ngForOf]=\"columns | tablefilter\">\n            <th valign=column.valign style=column.style name=column.tag>\n                <button (click)=\"orderClick($event, column.tag)\">{{column.name}}\n                    <iicon icon=\"keyboard-arrow-up\" *ngIf=\"displayOrder(column.tag, -1)\"></iicon>\n                    <iicon icon=\"keyboard-arrow-down\" *ngIf=\"displayOrder(column.tag, 1)\"></iicon>\n                </button>\n            </th>\n        </template>\n        <th style=\"width: 3%\" name=\"details\" *ngIf=\"settings\">\n            <picon-button icon=\"settings\" title=\"Settings\" (click)=\"settingsCallback.emit()\"></picon-button>\n        </th>\n    </tr>\n    </thead>\n    <tbody>\n    <template ngFor let-dat [ngForOf]=\"data | orderBy: [order,orderOption] | datafilter: [query, displayTemplate]\">\n        <tr *ngIf=\"shouldBeShown(dat)\">\n            <template ngFor let-column [ngForOf]=\"columns | tablefilter\">\n                <td *ngIf=\"column.type?.tag==='url'\"><a href=\"{{dat.getProperty(column.url).text}}\" target=\"_blank\">{{dat.getProperty(column.tag).text}}</a>\n                </td>\n                <td *ngIf=\"column.type?.tag==='text'\">\n                    <div [innerHtml]=\"dat.getProperty(column.tag).text|citation: [citationServ] | sanitizeHtml\"></div>\n                </td>\n                <td *ngIf=\"column.type?.tag==='label'\">\n                    <template ngFor let-sitem [ngForOf]=\"dat.getPropertyListItems(column.tag)\"\n                              *ngIf=\"column.type?.labelCls\">\n                        <ptooltip [tooltip]=\"column.values[sitem.content]\"\n                                  [tooltipHtml]=\"sitem.htmlChilds | citation: [citationServ]\" [position]=\"'n'\">\n                            <div class=\"{{column.type.getCls(sitem.content)}} {{column.type.labelCls.getCls(sitem.content)}}  mylabel\">\n                                {{sitem.content}}\n                            </div>\n                        </ptooltip>\n                    </template>\n                </td>\n                <td *ngIf=\"column.type?.tag=='rating'\">\n                    <iicon icon=\"star\" *ngIf=\"dat.getRating()!=0\">{{dat.getRating()}}</iicon>\n                </td>\n            </template>\n            <td>\n                <picon-button icon=\"info\" title=\"Details\" (click)=\"showDetails.emit(dat)\"></picon-button>\n            </td>\n        </tr>\n    </template>\n    </tbody>\n</table>\n        ";
+	module.exports = "<table class=\"table table-hover\" *ngIf=\"display\">\n    <thead style=\"background-color: white;\">\n    <tr>\n        <template ngFor let-column [ngForOf]=\"columns | tablefilter\">\n            <th valign=column.valign style=column.style name=column.tag>\n                <button (click)=\"orderClick($event, column.tag)\">{{column.name}}\n                    <iicon icon=\"keyboard-arrow-up\" *ngIf=\"displayOrder(column.tag, -1)\"></iicon>\n                    <iicon icon=\"keyboard-arrow-down\" *ngIf=\"displayOrder(column.tag, 1)\"></iicon>\n                </button>\n            </th>\n        </template>\n        <th style=\"width: 3%\" name=\"details\" *ngIf=\"settings\">\n            <picon-button icon=\"settings\" title=\"Settings\" (click)=\"settingsCallback.emit()\"></picon-button>\n        </th>\n    </tr>\n    </thead>\n    <tbody>\n    <template ngFor let-dat [ngForOf]=\"data | orderBy: [order,orderOption] | datafilter: [query, displayTemplate]\">\n        <tr *ngIf=\"shouldBeShown(dat)\">\n            <template ngFor let-column [ngForOf]=\"columns | tablefilter\">\n                <td *ngIf=\"column.type?.tag==='url'\"><a href=\"{{dat.getProperty(column.url).text}}\" target=\"_blank\">{{dat.getProperty(column.tag).text}}</a>\n                </td>\n                <td *ngIf=\"column.type?.tag==='text'\">\n                    <div [innerHtml]=\"dat.getProperty(column.tag).text|citation: [citationServ] | sanitizeHtml\"></div>\n                </td>\n                <td *ngIf=\"column.type?.tag==='label'\">\n                    <template ngFor let-sitem [ngForOf]=\"dat.getPropertyListItems(column.tag)\"\n                              *ngIf=\"column.type?.labelCls\">\n                        <ptooltip [tooltip]=\"column.values[sitem.content]\"\n                                  [tooltipHtml]=\"sitem.htmlChilds | citation: [citationServ]\" [position]=\"'n'\">\n                            <div class=\"{{column.type.getCls(sitem.content)}} {{column.type.labelCls.getCls(sitem.content)}}  mylabel\">\n                                {{sitem.content}}\n                            </div>\n                        </ptooltip>\n                    </template>\n                </td>\n                <td *ngIf=\"column.type?.tag=='rating'\">\n                    <iicon icon=\"star\" *ngIf=\"dat.getRating()!=0\">{{dat.getRating()}}</iicon>\n                </td>\n            </template>\n            <td>\n                <picon-button icon=\"info\" title=\"Details\" (click)=\"showDetails.emit(dat)\"></picon-button>\n            </td>\n        </tr>\n    </template>\n    </tbody>\n</table>\n        ";
 
 /***/ },
 /* 116 */
@@ -13068,4 +13080,4 @@ webpackJsonp([0],[
 
 /***/ }
 ]);
-//# sourceMappingURL=app.1e8f2688150eb23d9c8f.js.map
+//# sourceMappingURL=app.107c0c0e7d62b145f906.js.map
