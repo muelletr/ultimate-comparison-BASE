@@ -12809,16 +12809,9 @@ webpackJsonp([0],[
 	};
 	const core_1 = __webpack_require__(3);
 	const comparison_citation_service_1 = __webpack_require__(50);
-	const comparison_service_1 = __webpack_require__(48);
 	let HtmlCitationTextComponent = class HtmlCitationTextComponent {
-	    constructor(serv) {
-	        this.serv = serv;
+	    constructor() {
 	        this.description = " ";
-	    }
-	    makeMarkdown(text) {
-	        if (text === null || text === undefined || text === "" || text === " ")
-	            return " ";
-	        return this.serv.converter.makeHtml(text);
 	    }
 	};
 	__decorate([
@@ -12836,17 +12829,17 @@ webpackJsonp([0],[
 	        styles: [__webpack_require__(113)],
 	        changeDetection: core_1.ChangeDetectionStrategy.OnPush
 	    }), 
-	    __metadata('design:paramtypes', [(typeof (_b = typeof comparison_service_1.ComparisonService !== 'undefined' && comparison_service_1.ComparisonService) === 'function' && _b) || Object])
+	    __metadata('design:paramtypes', [])
 	], HtmlCitationTextComponent);
 	exports.HtmlCitationTextComponent = HtmlCitationTextComponent;
-	var _a, _b;
+	var _a;
 
 
 /***/ },
 /* 112 */
 /***/ function(module, exports) {
 
-	module.exports = "<div [innerHtml]=\"makeMarkdown(description) | citation: [citationServ] | sanitizeHtml\" class=\"'description'\"\n     *ngIf=\"description\"></div>\n        ";
+	module.exports = "<div [innerHtml]=\"description | citation: [citationServ] | sanitizeHtml\" class=\"'description'\"\n     *ngIf=\"description\"></div>\n        ";
 
 /***/ },
 /* 113 */
@@ -13075,4 +13068,4 @@ webpackJsonp([0],[
 
 /***/ }
 ]);
-//# sourceMappingURL=app.4eb9bebb893f51bc03e6.js.map
+//# sourceMappingURL=app.1e8f2688150eb23d9c8f.js.map
