@@ -3934,7 +3934,7 @@ webpackJsonp([0],[
 	        if (!latex) {
 	            value = value.replace(/(?:\[@)([^\]]*)(?:\])/g, (match, dec) => {
 	                entries.push(dec);
-	                return '<a style="color: lightgrey;" href="#' + dec + '">' + citServ.getBibEntriesInline(dec) + '</a>';
+	                return '<a href="#' + dec + '">' + citServ.getBibEntriesInline(dec) + '</a>';
 	            });
 	        }
 	        else {
@@ -12659,7 +12659,7 @@ webpackJsonp([0],[
 /* 104 */
 /***/ (function(module, exports) {
 
-	module.exports = ":host {\n    position: fixed;\n    overflow-x: hidden;\n    overflow-y: auto;\n    top: 0;\n    right: 0;\n    left: 0;\n    bottom: 0;\n    display: none;\n    z-index: 998;\n    background: rgba(0, 0, 0, 0.5);\n}\n\n@media (min-width: 992px) {\n    .dialog {\n        width: 900px !important;\n    }\n}\n\n@media (min-width: 768px) and (max-width: 992px) {\n    .dialog {\n        width: 600px !important;\n    }\n}\n\n@media (max-width: 660px) {\n    .dialog {\n        width: 90% !important;\n    }\n}\n\n.dialog {\n    max-height: inherit !important;\n    position: relative !important;\n    border-radius: 5px;\n    background: #ffffff;\n    color: #212121;\n    font-family: 'Roboto', 'Noto', sans-serif;\n    -webkit-font-smoothing: antialiased;\n    font-size: 14px;\n    font-weight: 400;\n    line-height: 20px;\n    box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.4);\n    margin-top: 25px;\n    margin-bottom: 60px;\n    margin-right: auto;\n    margin-left: auto;\n    max-width: 90%;\n}\n\n.buttons {\n    color: #3f51b5;\n    display: -ms-flexbox;\n    display: -webkit-flex;\n    display: flex;\n\n    -ms-flex-direction: row;\n    -webkit-flex-direction: row;\n    flex-direction: row;\n    -ms-flex-pack: end;\n    -webkit-justify-content: flex-end;\n    justify-content: flex-end;\n\n    position: relative;\n    padding: 8px;\n    margin: 0;\n}\n\n:host /deep/ .pheader {\n    border-bottom: 1px solid #eee;\n\n    padding: 15 15 8 15;\n    margin: 0 0 20 0;\n}\n\n:host /deep/ .pheader h2 {\n    font-family: 'Roboto', 'Noto', sans-serif;\n    -webkit-font-smoothing: antialiased;\n    white-space: nowrap;\n    overflow: visible;\n    text-overflow: ellipsis;\n    font-size: 20px;\n    font-weight: 500;\n    line-height: 28px;\n    margin: 0;\n}"
+	module.exports = ":host {\n    position: fixed;\n    overflow-x: hidden;\n    overflow-y: auto;\n    top: 0;\n    right: 0;\n    left: 0;\n    bottom: 0;\n    display: none;\n    z-index: 2000;\n    background: rgba(0, 0, 0, 0.5);\n}\n\n@media (min-width: 992px) {\n    .dialog {\n        width: 900px !important;\n    }\n}\n\n@media (min-width: 768px) and (max-width: 992px) {\n    .dialog {\n        width: 600px !important;\n    }\n}\n\n@media (max-width: 660px) {\n    .dialog {\n        width: 90% !important;\n    }\n}\n\n.dialog {\n    max-height: inherit !important;\n    position: relative !important;\n    border-radius: 5px;\n    background: #ffffff;\n    color: #212121;\n    font-family: 'Roboto', 'Noto', sans-serif;\n    -webkit-font-smoothing: antialiased;\n    font-size: 14px;\n    font-weight: 400;\n    line-height: 20px;\n    box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.4);\n    margin-top: 25px;\n    margin-bottom: 60px;\n    margin-right: auto;\n    margin-left: auto;\n    max-width: 90%;\n}\n\n.buttons {\n    color: #3f51b5;\n    display: -ms-flexbox;\n    display: -webkit-flex;\n    display: flex;\n\n    -ms-flex-direction: row;\n    -webkit-flex-direction: row;\n    flex-direction: row;\n    -ms-flex-pack: end;\n    -webkit-justify-content: flex-end;\n    justify-content: flex-end;\n\n    position: relative;\n    padding: 8px;\n    margin: 0;\n}\n\n:host /deep/ .pheader {\n    border-bottom: 1px solid #eee;\n\n    padding: 15 15 8 15;\n    margin: 0 0 20 0;\n}\n\n:host /deep/ .pheader h2 {\n    font-family: 'Roboto', 'Noto', sans-serif;\n    -webkit-font-smoothing: antialiased;\n    white-space: nowrap;\n    overflow: visible;\n    text-overflow: ellipsis;\n    font-size: 20px;\n    font-weight: 500;\n    line-height: 28px;\n    margin: 0;\n}"
 
 /***/ }),
 /* 105 */
@@ -13022,7 +13022,7 @@ webpackJsonp([0],[
 /* 116 */
 /***/ (function(module, exports) {
 
-	module.exports = ":host {\n    display: block;\n}\n\ntable {\n    min-width: 600px;\n    margin-bottom: 0px;\n}\n\n.mylabel {\n    margin: 2px;\n    display: inline-block !important;\n    cursor: pointer;\n    font-size: 14px !important;\n    white-space: inherit;\n}\n\nth > button {\n    border: none;\n    padding: 0;\n    outline: none;\n    background-color: inherit;\n}\n\ntable tr {\n    white-space: normal;\n}\n\ntable {\n    width: auto;\n}\n\nptooltip {\n    z-index: 3000;\n}"
+	module.exports = ":host {\n    display: block;\n}\n\ntable {\n    min-width: 600px;\n    margin-bottom: 0px;\n}\n\n.mylabel {\n    margin: 2px;\n    display: inline-block !important;\n    cursor: pointer;\n    font-size: 14px !important;\n    white-space: inherit;\n}\n\nth > button {\n    border: none;\n    padding: 0;\n    outline: none;\n    background-color: inherit;\n}\n\ntable tr {\n    white-space: normal;\n}\n\ntable {\n    width: auto;\n}"
 
 /***/ }),
 /* 117 */
@@ -13080,4 +13080,4 @@ webpackJsonp([0],[
 
 /***/ })
 ]);
-//# sourceMappingURL=app.b7e5cf4bb5c290d4d5c4.js.map
+//# sourceMappingURL=app.f5f902b93a75f7cee3f1.js.map
