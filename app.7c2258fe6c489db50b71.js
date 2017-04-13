@@ -112,7 +112,7 @@ webpackJsonp([0],[
 /* 26 */
 /***/ (function(module, exports) {
 
-	module.exports = "html {\n    overflow: auto;\n    overflow: initial;\n}\n"
+	module.exports = "html {\n    overflow: auto;\n    overflow: initial;\n}\n\n.cite-link {\n    color: lightgrey;\n}\n"
 
 /***/ }),
 /* 27 */
@@ -3934,7 +3934,7 @@ webpackJsonp([0],[
 	        if (!latex) {
 	            value = value.replace(/(?:\[@)([^\]]*)(?:\])/g, (match, dec) => {
 	                entries.push(dec);
-	                return '<a href="#' + dec + '">' + citServ.getBibEntriesInline(dec) + '</a>';
+	                return '<a class="cite-link" href="#' + dec + '">' + citServ.getBibEntriesInline(dec) + '</a>';
 	            });
 	        }
 	        else {
@@ -13022,7 +13022,7 @@ webpackJsonp([0],[
 /* 116 */
 /***/ (function(module, exports) {
 
-	module.exports = ":host {\n    display: block;\n}\n\ntable {\n    min-width: 600px;\n    margin-bottom: 0px;\n}\n\n.mylabel {\n    margin: 2px;\n    display: inline-block !important;\n    cursor: pointer;\n    font-size: 14px !important;\n    white-space: inherit;\n}\n\nth > button {\n    border: none;\n    padding: 0;\n    outline: none;\n    background-color: inherit;\n}\n\ntable tr {\n    white-space: normal;\n}\n\ntable {\n    width: auto;\n}"
+	module.exports = ":host {\n    display: block;\n}\n\ntable {\n    min-width: 600px;\n    margin-bottom: 0px;\n}\n\n.mylabel {\n    margin: 2px;\n    display: inline-block !important;\n    cursor: pointer;\n    font-size: 14px !important;\n    white-space: inherit;\n}\n\nth > button {\n    border: none;\n    padding: 0;\n    outline: none;\n    background-color: inherit;\n}\n\ntable tr {\n    white-space: normal;\n}\n\ntable {\n    width: auto;\n}\n\nptooltip {\n    z-index: 3000;\n}"
 
 /***/ }),
 /* 117 */
@@ -13080,4 +13080,4 @@ webpackJsonp([0],[
 
 /***/ })
 ]);
-//# sourceMappingURL=app.6dffba769f627fe204aa.js.map
+//# sourceMappingURL=app.7c2258fe6c489db50b71.js.map

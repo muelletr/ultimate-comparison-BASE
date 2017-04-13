@@ -3,15 +3,22 @@
     "tag": "Default 1 - http://default-1-entry.example.com",
     "descr": "slow, MIT, red 1, grey",
     "Performance": {
-      "plain": "- slow\n",
+      "plain": "- slow\n    - [@Bry07towardsformal]\n",
       "childs": {
         "0": [
           [
             {
               "content": "slow",
               "plain": "slow\n",
-              "plainChilds": "",
-              "childs": []
+              "plainChilds": "    - [@Bry07towardsformal]\n",
+              "childs": [
+                {
+                  "content": ",[@Bry07towardsformal]",
+                  "plain": "[@Bry07towardsformal]\n",
+                  "plainChilds": "",
+                  "childs": []
+                }
+              ]
             }
           ]
         ]
