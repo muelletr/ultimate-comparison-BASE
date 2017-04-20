@@ -112,7 +112,7 @@ webpackJsonp([0],[
 /* 26 */
 /***/ (function(module, exports) {
 
-	module.exports = "html {\n    overflow: auto;\n    overflow: initial;\n}\n\n.cite-link {\n    color: lightgrey;\n}\n"
+	module.exports = "html {\n    overflow: auto;\n    overflow: initial;\n}\n\n.cite-link {\n    color: lightgrey;\n}\n\nli a.cite-link {\n    color: #337ab7;\n}"
 
 /***/ }),
 /* 27 */
@@ -3766,6 +3766,18 @@ webpackJsonp([0],[
 	        this.precheck = false;
 	        this.ready = false;
 	    }
+	    sortedReferences() {
+	        let values = [];
+	        for (let reference of this.references) {
+	            let key = reference;
+	            let entry = { "html": this.bibEntriesHtml[key] };
+	            entry["index"] = this.bibEntriesInline[key];
+	            entry["index"] = entry["index"].substr(1, entry["index"].length - 2);
+	            values.push(entry);
+	        }
+	        console.log(values);
+	        return values.sort((a, b) => a.index - b.index);
+	    }
 	    loadCitationData(cd) {
 	        this.http.request('citation/output/fbib.json')
 	            .subscribe(res => {
@@ -4099,8 +4111,8 @@ webpackJsonp([0],[
 	class VersionInformation {
 	    constructor() {
 	        this.date = "2017-04-20";
-	        this.commit = "961d874c3bd907c232f4d28ab414e0265b6bb63e";
-	        this.link = "https://github.com/ultimate-comparisons/ultimate-comparison-BASE/commit/961d874c3bd907c232f4d28ab414e0265b6bb63e";
+	        this.commit = "3c97f338b2f27e0d8f3b7d10ed3e7399db4236a1";
+	        this.link = "https://github.com/ultimate-comparisons/ultimate-comparison-BASE/commit/3c97f338b2f27e0d8f3b7d10ed3e7399db4236a1";
 	    }
 	}
 	exports.VersionInformation = VersionInformation;
@@ -4568,7 +4580,11 @@ webpackJsonp([0],[
 	        this._sanitizer = _sanitizer;
 	    }
 	    transform(v) {
-	        return this._sanitizer.bypassSecurityTrustHtml(v);
+	        let html = this._sanitizer.bypassSecurityTrustHtml(v);
+	        if (html.hasOwnProperty("changingThisBreaksApplicationSecurity") && html["changingThisBreaksApplicationSecurity"].startsWith("<p>")) {
+	            html["changingThisBreaksApplicationSecurity"] = "<p>" + html["changingThisBreaksApplicationSecurity"].substr(html["changingThisBreaksApplicationSecurity"].indexOf('.') + 1);
+	        }
+	        return html;
 	    }
 	};
 	SanitizerPipe = __decorate([
@@ -13090,7 +13106,7 @@ webpackJsonp([0],[
 /* 119 */
 /***/ (function(module, exports) {
 
-	module.exports = "<table>\n    <template ngFor let-entry [ngForOf]=\"this.citationServ.references\">\n        <tr style=\"padding-left:5px;\">\n            <td style=\"padding-right:10px;font-size:small;padding-top:3px;width:15%;\" valign=\"top\">\n                {{citationServ.bibEntriesInline[entry]}}:\n            </td>\n            <td [id]=entry [innerHtml]=\"citationServ.bibEntriesHtml[entry]|sanitizeHtml\"></td>\n        </tr>\n    </template>\n</table>";
+	module.exports = "<table>\n    <template ngFor let-entry [ngForOf]=\"this.citationServ.sortedReferences()\">\n        <tr style=\"padding-left:5px;\">\n            <td style=\"padding-right:10px;font-size:small;padding-top:3px;width:15%;\" valign=\"top\">\n                {{'[' + entry.index + ']'}}:\n            </td>\n            <td [id]=entry [innerHtml]=\"entry.html|sanitizeHtml\"></td>\n        </tr>\n    </template>\n</table>";
 
 /***/ }),
 /* 120 */
@@ -13100,4 +13116,4 @@ webpackJsonp([0],[
 
 /***/ })
 ]);
-//# sourceMappingURL=app.d68298fb91decad112a8.js.map
+//# sourceMappingURL=app.0d7ee18cc56627344405.js.map
