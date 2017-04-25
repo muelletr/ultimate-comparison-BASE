@@ -495,9 +495,6 @@ webpackJsonp([0],[
 /***/ (function(module, exports) {
 
 	"use strict";
-	/**
-	 * Created by armin on 25.04.17.
-	 */
 	class ColorDictionary {
 	    constructor() {
 	        this.colorDict = {};
@@ -4151,8 +4148,8 @@ webpackJsonp([0],[
 	class VersionInformation {
 	    constructor() {
 	        this.date = "2017-04-25";
-	        this.commit = "0f6c5a8f827c9c03ea5385574010ab96fceafd11";
-	        this.link = "https://github.com/ultimate-comparisons/ultimate-comparison-BASE/commit/0f6c5a8f827c9c03ea5385574010ab96fceafd11";
+	        this.commit = "176c59379a9f348369ac7bfa5640e4f993d08831";
+	        this.link = "https://github.com/ultimate-comparisons/ultimate-comparison-BASE/commit/176c59379a9f348369ac7bfa5640e4f993d08831";
 	    }
 	}
 	exports.VersionInformation = VersionInformation;
@@ -13161,4 +13158,4 @@ webpackJsonp([0],[
 
 /***/ })
 ]);
-//# sourceMappingURL=app.166f729c6821c6b54b6d.js.map
+//# sourceMappingURL=app.efca87a7fd28c72c7877.js.map
