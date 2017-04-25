@@ -67,6 +67,27 @@
           "Default long description in __markdown__."
         ]
       }
+    },
+    "Uncolored": {
+      "plain": "- color 1\n- color 2\n",
+      "childs": {
+        "0": [
+          [
+            {
+              "content": "color 1",
+              "plain": "color 1\n",
+              "plainChilds": "",
+              "childs": []
+            },
+            {
+              "content": "color 2",
+              "plain": "color 2\n",
+              "plainChilds": "",
+              "childs": []
+            }
+          ]
+        ]
+      }
     }
   },
   {
@@ -128,6 +149,27 @@
       "childs": {
         "0": [
           "Default long description in __markdown__."
+        ]
+      }
+    },
+    "Uncolored": {
+      "plain": "- color 1\n- color 3\n",
+      "childs": {
+        "0": [
+          [
+            {
+              "content": "color 1",
+              "plain": "color 1\n",
+              "plainChilds": "",
+              "childs": []
+            },
+            {
+              "content": "color 3",
+              "plain": "color 3\n",
+              "plainChilds": "",
+              "childs": []
+            }
+          ]
         ]
       }
     }
@@ -199,6 +241,21 @@
           "Default long description in __markdown__."
         ]
       }
+    },
+    "Uncolored": {
+      "plain": "- color 2\n",
+      "childs": {
+        "0": [
+          [
+            {
+              "content": "color 2",
+              "plain": "color 2\n",
+              "plainChilds": "",
+              "childs": []
+            }
+          ]
+        ]
+      }
     }
   },
   {
@@ -266,6 +323,21 @@
       "childs": {
         "0": [
           "Default long description in __markdown__."
+        ]
+      }
+    },
+    "Uncolored": {
+      "plain": "- color 1\n",
+      "childs": {
+        "0": [
+          [
+            {
+              "content": "color 1",
+              "plain": "color 1\n",
+              "plainChilds": "",
+              "childs": []
+            }
+          ]
         ]
       }
     }
