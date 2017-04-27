@@ -4111,8 +4111,8 @@ webpackJsonp([0],[
 	class VersionInformation {
 	    constructor() {
 	        this.date = "2017-04-27";
-	        this.commit = "2469247ce382ec8a33f54d961f94cbc344926822";
-	        this.link = "https://github.com/ultimate-comparisons/ultimate-comparison-BASE/commit/2469247ce382ec8a33f54d961f94cbc344926822";
+	        this.commit = "a582834de7e9685bbac69b3859e6b2beb0877f5d";
+	        this.link = "https://github.com/ultimate-comparisons/ultimate-comparison-BASE/commit/a582834de7e9685bbac69b3859e6b2beb0877f5d";
 	    }
 	}
 	exports.VersionInformation = VersionInformation;
@@ -4580,7 +4580,6 @@ webpackJsonp([0],[
 	        this._sanitizer = _sanitizer;
 	    }
 	    transform(v) {
-	        console.log("sanitize: " + v);
 	        let html = this._sanitizer.bypassSecurityTrustHtml(v);
 	        if (html.hasOwnProperty("changingThisBreaksApplicationSecurity") && /^<p>\d+\./.test(html["changingThisBreaksApplicationSecurity"])) {
 	            html["changingThisBreaksApplicationSecurity"] = "<p>" + html["changingThisBreaksApplicationSecurity"].substr(html["changingThisBreaksApplicationSecurity"].indexOf('.') + 1);
@@ -13117,4 +13116,4 @@ webpackJsonp([0],[
 
 /***/ })
 ]);
-//# sourceMappingURL=app.0895a030a3b2c43db9a5.js.map
+//# sourceMappingURL=app.9ff775dd7fdbba23e540.js.map
