@@ -63,23 +63,5 @@
         "name": "light blue"
       }
     ]
-  },
-  {
-    "name": "Uncolored",
-    "tag": "Uncolored",
-    "description": "Tags that were originally uncolored.",
-    "placeholder": "Select color ...",
-    "and_search": false,
-    "values": [
-      {
-        "name": "color 1"
-      },
-      {
-        "name": "color 2"
-      },
-      {
-        "name": "color 3"
-      }
-    ]
   }
 ]
