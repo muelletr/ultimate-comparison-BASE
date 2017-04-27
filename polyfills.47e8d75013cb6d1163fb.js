@@ -78,7 +78,7 @@
 /******/ 			script.charset = 'utf-8';
 /******/ 			script.async = true;
 /******/
-/******/ 			script.src = __webpack_require__.p + "" + chunkId + "." + "efca87a7fd28c72c7877" + ".chunk.js";
+/******/ 			script.src = __webpack_require__.p + "" + chunkId + "." + "47e8d75013cb6d1163fb" + ".chunk.js";
 /******/ 			head.appendChild(script);
 /******/ 		}
 /******/ 	};
@@ -8920,6 +8920,10 @@
 	process.removeListener = noop;
 	process.removeAllListeners = noop;
 	process.emit = noop;
+	process.prependListener = noop;
+	process.prependOnceListener = noop;
+	
+	process.listeners = function (name) { return [] }
 	
 	process.binding = function (name) {
 	    throw new Error('process.binding is not supported');
@@ -8934,4 +8938,4 @@
 
 /***/ })
 /******/ ]);
-//# sourceMappingURL=polyfills.efca87a7fd28c72c7877.js.map
+//# sourceMappingURL=polyfills.47e8d75013cb6d1163fb.js.map

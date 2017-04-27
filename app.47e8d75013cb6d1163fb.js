@@ -499,7 +499,7 @@ webpackJsonp([0],[
 	    constructor() {
 	        this.colorDict = {};
 	    }
-	    pushColor(label, color) {
+	    setColor(label, color) {
 	        this.colorDict[label] = color;
 	    }
 	    getColor(label) {
@@ -559,7 +559,7 @@ webpackJsonp([0],[
 	            if (obj.type && obj.type.values) {
 	                for (const v of obj.type.values) {
 	                    if (v.color) {
-	                        colors.pushColor(v.name, v.color);
+	                        colors.setColor(v.name, v.color);
 	                    }
 	                }
 	            }
@@ -4147,9 +4147,9 @@ webpackJsonp([0],[
 	"use strict";
 	class VersionInformation {
 	    constructor() {
-	        this.date = "2017-04-25";
-	        this.commit = "176c59379a9f348369ac7bfa5640e4f993d08831";
-	        this.link = "https://github.com/ultimate-comparisons/ultimate-comparison-BASE/commit/176c59379a9f348369ac7bfa5640e4f993d08831";
+	        this.date = "2017-04-27";
+	        this.commit = "6405fe725a3ac90733e6a9566a690a58939e2e9b";
+	        this.link = "https://github.com/ultimate-comparisons/ultimate-comparison-BASE/commit/6405fe725a3ac90733e6a9566a690a58939e2e9b";
 	    }
 	}
 	exports.VersionInformation = VersionInformation;
@@ -13158,4 +13158,4 @@ webpackJsonp([0],[
 
 /***/ })
 ]);
-//# sourceMappingURL=app.efca87a7fd28c72c7877.js.map
+//# sourceMappingURL=app.47e8d75013cb6d1163fb.js.map
