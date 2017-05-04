@@ -4149,8 +4149,8 @@ webpackJsonp([0],[
 	class VersionInformation {
 	    constructor() {
 	        this.date = "2017-05-04";
-	        this.commit = "06825a9533ee4c1fc6d58b2f2c68e9aacf32cb28";
-	        this.link = "https://github.com/ultimate-comparisons/ultimate-comparison-BASE/commit/06825a9533ee4c1fc6d58b2f2c68e9aacf32cb28";
+	        this.commit = "3f1ed8c6f88e9fcd81b619d932ea6c6160ea2836";
+	        this.link = "https://github.com/ultimate-comparisons/ultimate-comparison-BASE/commit/3f1ed8c6f88e9fcd81b619d932ea6c6160ea2836";
 	    }
 	}
 	exports.VersionInformation = VersionInformation;
@@ -4576,6 +4576,18 @@ webpackJsonp([0],[
 	                if (this.params.option[i] == 0)
 	                    continue;
 	                let desc = this.params.option[i] == -1 ? true : false;
+	                if (a.properties[this.params.value[i]] === undefined && b.properties[this.params.value[i]] === undefined) {
+	                    // both elements lack the attribute => equivalent
+	                    return 0;
+	                }
+	                else if (a.properties[this.params.value[i]] === undefined) {
+	                    // a lacks the attribute => it is always below the others
+	                    return 1;
+	                }
+	                else if (b.properties[this.params.value[i]] === undefined) {
+	                    // b lacks the attribute => it is always below the others
+	                    return -1;
+	                }
 	                let pA = a[this.params.value[i]] ? a[this.params.value[i]] : a.properties[this.params.value[i]].plain;
 	                let pB = b[this.params.value[i]] ? b[this.params.value[i]] : b.properties[this.params.value[i]].plain;
 	                let comparison = !desc ? OrderByPipe_1._comparator(pA, pB) : -OrderByPipe_1._comparator(pA, pB);
@@ -13159,4 +13171,4 @@ webpackJsonp([0],[
 
 /***/ })
 ]);
-//# sourceMappingURL=app.41d3af3943bb6538cc4f.js.map
+//# sourceMappingURL=app.08ae8c8ae4ec87713c34.js.map
