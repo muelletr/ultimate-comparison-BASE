@@ -9,6 +9,22 @@
 
 <body>
     <myapp>Loading...</myapp>
-<script type="text/javascript" src="./polyfills.44d135d18667912f5f31.js"></script><script type="text/javascript" src="./vndr.44d135d18667912f5f31.js"></script><script type="text/javascript" src="./app.44d135d18667912f5f31.js"></script></body>
+    <script language="javascript">
+        $(document).keydown(function (event) {
+            // escape
+            if (event.keyCode !== 27) {
+                return;
+            }
+            let el = $("pdialog#settings");
+            if (el != null && el.is(":visible")) {
+                el.hide();
+            }
+            el = $("pdialog#details");
+            if (el != null && el.is(":visible")) {
+                el.hide();
+            }
+        });
+    </script>
+<script type="text/javascript" src="./polyfills.5e4d996dd0861daae354.js"></script><script type="text/javascript" src="./vndr.5e4d996dd0861daae354.js"></script><script type="text/javascript" src="./app.5e4d996dd0861daae354.js"></script></body>
 
 </html>
