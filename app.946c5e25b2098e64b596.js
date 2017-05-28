@@ -4148,9 +4148,9 @@ webpackJsonp([0],[
 	"use strict";
 	class VersionInformation {
 	    constructor() {
-	        this.date = "2017-05-04";
-	        this.commit = "3f1ed8c6f88e9fcd81b619d932ea6c6160ea2836";
-	        this.link = "https://github.com/ultimate-comparisons/ultimate-comparison-BASE/commit/3f1ed8c6f88e9fcd81b619d932ea6c6160ea2836";
+	        this.date = "2017-05-28";
+	        this.commit = "2f8f0cb4356c1a3b3689f99737849847b807a89e";
+	        this.link = "https://github.com/ultimate-comparisons/ultimate-comparison-BASE/commit/2f8f0cb4356c1a3b3689f99737849847b807a89e";
 	    }
 	}
 	exports.VersionInformation = VersionInformation;
@@ -4575,10 +4575,11 @@ webpackJsonp([0],[
 	            for (let i = 0; i < this.params.value.length; i++) {
 	                if (this.params.option[i] == 0)
 	                    continue;
-	                let desc = this.params.option[i] == -1 ? true : false;
+	                let desc = this.params.option[i] == -1;
 	                if (a.properties[this.params.value[i]] === undefined && b.properties[this.params.value[i]] === undefined) {
-	                    // both elements lack the attribute => equivalent
-	                    return 0;
+	                    if (a[this.params.value[i]] === undefined && b[this.params.value[i]] === undefined) {
+	                        return 0;
+	                    }
 	                }
 	                else if (a.properties[this.params.value[i]] === undefined) {
 	                    // a lacks the attribute => it is always below the others
@@ -13171,4 +13172,4 @@ webpackJsonp([0],[
 
 /***/ })
 ]);
-//# sourceMappingURL=app.08ae8c8ae4ec87713c34.js.map
+//# sourceMappingURL=app.946c5e25b2098e64b596.js.map
