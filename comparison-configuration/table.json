@@ -144,5 +144,41 @@
                 }
             ]
         }
+    },
+    {
+        "name": "Active Development",
+        "tag": "Active Development",
+        "display": true,
+        "repo": true,
+        "type": {
+            "tag": "label",
+            "values": [
+                {
+                    "name": "Active",
+                    "description": "Active",
+                    "min-age": -1,
+                    "max-age": 1,
+                    "max-age-unit": "m",
+                    "class": "label-success"
+                },
+                {
+                    "name": "Not Sure",
+                    "description": "Not Sure",
+                    "min-age": 1,
+                    "min-age-unit": "m",
+                    "max-age": 6,
+                    "max-age-unit": "m",
+                    "class": "label-warning"
+                },
+                {
+                    "name": "Inactive",
+                    "description": "Inactive",
+                    "min-age": 6,
+                    "min-age-unit": "m",
+                    "max-age": -1,
+                    "class": "label-danger"
+                }
+            ]
+        }
     }
 ]
