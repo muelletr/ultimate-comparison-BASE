@@ -4304,9 +4304,9 @@ webpackJsonp([0],[
 	"use strict";
 	class VersionInformation {
 	    constructor() {
-	        this.date = "2017-06-14";
-	        this.commit = "e537b5790cda4a3a9a5abb753dff3ec1845ca99c";
-	        this.link = "https://github.com/ultimate-comparisons/ultimate-comparison-BASE/commit/e537b5790cda4a3a9a5abb753dff3ec1845ca99c";
+	        this.date = "2017-06-16";
+	        this.commit = "d86c0bb7b369c9f23f9a4ecc4760d37773bc8cc7";
+	        this.link = "https://github.com/ultimate-comparisons/ultimate-comparison-BASE/commit/d86c0bb7b369c9f23f9a4ecc4760d37773bc8cc7";
 	    }
 	}
 	exports.VersionInformation = VersionInformation;
@@ -13160,6 +13160,7 @@ webpackJsonp([0],[
 	        }
 	        this.orderChange.emit(this.order);
 	        this.orderOptionChange.emit(this.orderOption);
+	        this.table.trigger('reflow');
 	    }
 	    displayOrder(value, option) {
 	        if (this.order.length === 0 && this.orderOption.length === 0) {
@@ -13169,8 +13170,8 @@ webpackJsonp([0],[
 	        return this.order.findIndex(val => val == value) >= 0 && this.orderOption[this.order.findIndex(val => val == value)] == option;
 	    }
 	    ngAfterViewChecked() {
-	        const t = $("table.table.table-hover");
-	        t.floatThead();
+	        this.table = $("table.table.table-hover");
+	        this.table.floatThead();
 	        anchors.options = {
 	            placement: 'right'
 	        };
@@ -13332,4 +13333,4 @@ webpackJsonp([0],[
 
 /***/ })
 ]);
-//# sourceMappingURL=app.57001b592f62a5a75956.js.map
+//# sourceMappingURL=app.d90cda685d3d252ba39c.js.map
