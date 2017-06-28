@@ -287,12 +287,12 @@ webpackJsonp([0],[
 	    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
 	}
 	__export(__webpack_require__(32));
-	__export(__webpack_require__(33));
-	__export(__webpack_require__(34));
-	__export(__webpack_require__(35));
-	__export(__webpack_require__(36));
-	__export(__webpack_require__(39));
 	__export(__webpack_require__(37));
+	__export(__webpack_require__(38));
+	__export(__webpack_require__(39));
+	__export(__webpack_require__(40));
+	__export(__webpack_require__(43));
+	__export(__webpack_require__(41));
 	__export(__webpack_require__(44));
 	__export(__webpack_require__(45));
 	__export(__webpack_require__(46));
@@ -308,13 +308,16 @@ webpackJsonp([0],[
 
 	"use strict";
 	const index_1 = __webpack_require__(31);
+	const util_1 = __webpack_require__(33);
 	class Data {
-	    constructor(tag = "", descr = "", url = "", properties = {}, rating = new index_1.RatingSet({})) {
+	    constructor(http, tag = "", descr = "", url = "", properties = {}, rating = new index_1.RatingSet({})) {
+	        this.http = http;
 	        this.tag = tag;
 	        this.descr = descr;
 	        this.url = url;
 	        this.properties = properties;
 	        this.rating = rating;
+	        this.repoLabels = {};
 	    }
 	    getProperty(name) {
 	        switch (name) {
@@ -329,6 +332,82 @@ webpackJsonp([0],[
 	            default:
 	                return this.properties[name] ? this.properties[name] : new index_1.Property();
 	        }
+	    }
+	    getRepoLabels(td) {
+	        if (util_1.isNullOrUndefined(this.properties["Repo"]) || util_1.isNullOrUndefined(this.properties["Repo"].list[0])) {
+	            return new index_1.Property();
+	        }
+	        if (!util_1.isNullOrUndefined(this.properties[td.tag])) {
+	            return this.properties[td.tag];
+	        }
+	        const repoUrl = this.properties["Repo"].list[0].content;
+	        const url = this.repoQueryBuildUrl(repoUrl);
+	        if (url === "") {
+	            return new index_1.Property();
+	        }
+	        this.http.get(url).toPromise().then(res => {
+	            const d = {};
+	            const commitDate = new Date(res.json()[0].commit.author.date);
+	            let child = "The last commit is ";
+	            const cd = moment(commitDate);
+	            const now = moment();
+	            const dateStrings = ['years', 'months', 'days', 'hours', 'minutes', 'seconds'];
+	            for (const s of dateStrings) {
+	                const diff = Math.abs(now.diff(cd, s));
+	                if (diff !== 0) {
+	                    child += diff;
+	                    // append unit in singular or plural
+	                    child += " " + (diff === 1 ? s.substr(0, s.length - 1) : s);
+	                    break;
+	                }
+	            }
+	            child += " old";
+	            d.htmlChilds = child;
+	            for (const value in td.values) {
+	                if (util_1.isNullOrUndefined(td.values[value]["min-age"])) {
+	                    continue;
+	                }
+	                const min = td.values[value]["min-age"];
+	                const minUnit = td.values[value]["min-age-unit"];
+	                const minDiff = Math.abs(now.diff(cd, minUnit));
+	                const max = td.values[value]["max-age"];
+	                const maxUnit = td.values[value]["max-age-unit"];
+	                const maxDiff = Math.abs(now.diff(cd, maxUnit));
+	                // min === -1 => no limit
+	                // same for max
+	                let property;
+	                for (const prop in this.properties) {
+	                    if (prop === td.tag) {
+	                        property = this.properties[prop];
+	                        break;
+	                    }
+	                }
+	                if (util_1.isNullOrUndefined(property)) {
+	                    property = new index_1.Property();
+	                }
+	                if ((min === -1 || min <= minDiff) && (max === -1 || max > maxDiff)) {
+	                    d.content = value;
+	                    for (const item of property.list) {
+	                        if (item.content === d.content) {
+	                            property.list.splice(property.list.indexOf(item), 1);
+	                        }
+	                    }
+	                    property.list.push(d);
+	                    property.plain += " " + (cd.unix() - now.unix());
+	                    property.plain = property.plain.trim();
+	                }
+	                this.properties[td.tag] = property;
+	            }
+	        });
+	        return new index_1.Property();
+	    }
+	    repoQueryBuildUrl(repoUrl) {
+	        let url;
+	        if (/https?:\/\/github\.com.*/.test(repoUrl)) {
+	            url = repoUrl.replace(/https?:\/\/github.com/, "https://api.github.com/repos");
+	            url += url.endsWith("/") ? "commits" : "/commits";
+	        }
+	        return url;
 	    }
 	    getPropertyTags(name) {
 	        let tagList = new Array();
@@ -353,260 +432,6 @@ webpackJsonp([0],[
 
 /***/ }),
 /* 33 */
-/***/ (function(module, exports) {
-
-	"use strict";
-	class LabelCls {
-	    constructor(label_success = Array(), label_warning = Array(), label_danger = Array(), label_default = Array(), label_info = Array(), label_primary = Array()) {
-	        this.label_success = label_success;
-	        this.label_warning = label_warning;
-	        this.label_danger = label_danger;
-	        this.label_default = label_default;
-	        this.label_info = label_info;
-	        this.label_primary = label_primary;
-	    }
-	    getCls(item) {
-	        if (this.label_success.some(it => it.name == item)) {
-	            return "label-success";
-	        }
-	        if (this.label_warning.some(it => it.name == item)) {
-	            return "label-warning";
-	        }
-	        if (this.label_danger.some(it => it.name == item)) {
-	            return "label-danger";
-	        }
-	        if (this.label_default.some(it => it.name == item)) {
-	            return "label-default";
-	        }
-	        if (this.label_info.some(it => it.name == item)) {
-	            return "label-info";
-	        }
-	        if (this.label_primary.some(it => it.name == item)) {
-	            return "label-primary";
-	        }
-	        return "";
-	    }
-	}
-	exports.LabelCls = LabelCls;
-
-
-/***/ }),
-/* 34 */
-/***/ (function(module, exports) {
-
-	"use strict";
-	class ListItem {
-	    constructor(content = "", plainChilds = "", converter) {
-	        this.content = content;
-	        this.plainChilds = plainChilds;
-	        this.converter = converter;
-	        this.htmlChilds = "";
-	        this.latexChilds = "";
-	        this.convertChilds();
-	    }
-	    convertChilds() {
-	        if (this.plainChilds != "") {
-	            this.htmlChilds = this.converter.makeHtml(this.plainChilds.replace(/^[\s]{3}/gm, ""));
-	            if (this.htmlChilds) {
-	                this.latexChilds = this.htmlChilds.replace(/[\s]{2}/gm, " ");
-	                this.latexChilds = this.latexChilds.replace(/[\s]/gm, " ");
-	            }
-	        }
-	    }
-	    getLabel() {
-	        return this.content + this.htmlChilds;
-	    }
-	}
-	exports.ListItem = ListItem;
-
-
-/***/ }),
-/* 35 */
-/***/ (function(module, exports) {
-
-	"use strict";
-	class Property {
-	    constructor(plain = "", text = "", list = new Array()) {
-	        this.plain = plain;
-	        this.text = text;
-	        this.list = list;
-	    }
-	}
-	exports.Property = Property;
-
-
-/***/ }),
-/* 36 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	"use strict";
-	const type_1 = __webpack_require__(37);
-	class TableData {
-	    constructor(name = "", tag = "", url = "", style = "", display = false, type = new type_1.Type(), values = {}, sort = 0, repo = false) {
-	        this.name = name;
-	        this.tag = tag;
-	        this.url = url;
-	        this.style = style;
-	        this.display = display;
-	        this.type = type;
-	        this.values = values;
-	        this.sort = sort;
-	        this.repo = repo;
-	    }
-	}
-	exports.TableData = TableData;
-
-
-/***/ }),
-/* 37 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	"use strict";
-	const labelcls_1 = __webpack_require__(33);
-	const color_dictionary_1 = __webpack_require__(38);
-	class Type {
-	    constructor(tag = "", cls = "", labelCls = new labelcls_1.LabelCls(), colors = new color_dictionary_1.ColorDictionary()) {
-	        this.tag = tag;
-	        this.cls = cls;
-	        this.labelCls = labelCls;
-	        this.colors = colors;
-	    }
-	    getCls(item) {
-	        let labelClsString = this.labelCls.getCls(item);
-	        if (this.cls == "" && labelClsString == "" && this.colors[item] === "") {
-	            return "label label-default";
-	        }
-	        else if (this.cls == "" && labelClsString == "") {
-	            return "label";
-	        }
-	        else if (labelClsString != "") {
-	            return "label " + labelClsString;
-	        }
-	        else {
-	            //quick fix for old implementations
-	            return this.cls != "label" ? this.cls : this.cls + "label-default";
-	        }
-	    }
-	}
-	exports.Type = Type;
-
-
-/***/ }),
-/* 38 */
-/***/ (function(module, exports) {
-
-	"use strict";
-	class ColorDictionary {
-	    constructor() {
-	        this.colorDict = {};
-	    }
-	    setColor(label, color) {
-	        this.colorDict[label] = color;
-	    }
-	    getColor(label) {
-	        if (this.colorDict[label]) {
-	            return this.colorDict[label];
-	        }
-	        else {
-	            return "";
-	        }
-	    }
-	}
-	exports.ColorDictionary = ColorDictionary;
-
-
-/***/ }),
-/* 39 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	"use strict";
-	const index_1 = __webpack_require__(31);
-	const color_dictionary_1 = __webpack_require__(38);
-	const util_1 = __webpack_require__(40);
-	class TableDataSet {
-	    constructor(jsonObj) {
-	        this.tableDataSet = {};
-	        this.set = new Array();
-	        this.ready = false;
-	        jsonObj.forEach(obj => {
-	            let lcls = new index_1.LabelCls();
-	            var values = {};
-	            if (obj.type.values) {
-	                obj.type.values.forEach(val => {
-	                    let value = new index_1.Value(val.name, val.description);
-	                    if (util_1.isNullOrUndefined(val["min-age"])) {
-	                        values[val.name] = val.description;
-	                    }
-	                    else {
-	                        const v = {};
-	                        v["min-age"] = val["min-age"];
-	                        v["min-age-unit"] = val["min-age-unit"];
-	                        v["max-age"] = val["max-age"];
-	                        v["max-age-unit"] = val["max-age-unit"];
-	                        v["descirption"] = val.description;
-	                        values[val.name] = v;
-	                    }
-	                    switch (val.class) {
-	                        case "label-success":
-	                            lcls.label_success.push(value);
-	                            break;
-	                        case "label-warning":
-	                            lcls.label_warning.push(value);
-	                            break;
-	                        case "label-danger":
-	                            lcls.label_danger.push(value);
-	                            break;
-	                        case "label-default":
-	                            lcls.label_default.push(value);
-	                            break;
-	                        case "label-info":
-	                            lcls.label_info.push(value);
-	                            break;
-	                        case "label-primary":
-	                            lcls.label_primary.push(value);
-	                            break;
-	                    }
-	                });
-	            }
-	            let colors = new color_dictionary_1.ColorDictionary();
-	            if (obj.type && obj.type.values) {
-	                for (const v of obj.type.values) {
-	                    if (v.color) {
-	                        colors.setColor(v.name, v.color);
-	                    }
-	                }
-	            }
-	            let type = new index_1.Type(obj.type.tag, obj.type.class, lcls, colors);
-	            let td = new index_1.TableData(obj.name, obj.tag, obj.urlTag, obj.style, obj.display, type, values, obj.sort, obj.repo);
-	            this.tableDataSet[obj.tag] = td;
-	        });
-	        this.ready = true;
-	    }
-	    getTableData(tag) {
-	        return this.tableDataSet[tag] ? this.tableDataSet[tag] : new index_1.TableData();
-	    }
-	    getTableDataArray() {
-	        let size = 0;
-	        for (let key in this.tableDataSet) {
-	            if (!this.tableDataSet.hasOwnProperty(key))
-	                continue;
-	            size++;
-	        }
-	        if (this.set.length != size) {
-	            for (let key in this.tableDataSet) {
-	                if (!this.tableDataSet.hasOwnProperty(key))
-	                    continue;
-	                this.set.push(this.tableDataSet[key]);
-	            }
-	        }
-	        return this.set;
-	    }
-	}
-	exports.TableDataSet = TableDataSet;
-
-
-/***/ }),
-/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global, process) {// Copyright Joyent, Inc. and other Node contributors.
@@ -1134,7 +959,7 @@ webpackJsonp([0],[
 	}
 	exports.isPrimitive = isPrimitive;
 	
-	exports.isBuffer = __webpack_require__(42);
+	exports.isBuffer = __webpack_require__(35);
 	
 	function objectToString(o) {
 	  return Object.prototype.toString.call(o);
@@ -1178,7 +1003,7 @@ webpackJsonp([0],[
 	 *     prototype.
 	 * @param {function} superCtor Constructor function to inherit prototype from.
 	 */
-	exports.inherits = __webpack_require__(43);
+	exports.inherits = __webpack_require__(36);
 	
 	exports._extend = function(origin, add) {
 	  // Don't do anything if add isn't an object
@@ -1196,11 +1021,11 @@ webpackJsonp([0],[
 	  return Object.prototype.hasOwnProperty.call(obj, prop);
 	}
 	
-	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(41)))
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(34)))
 
 /***/ }),
-/* 41 */,
-/* 42 */
+/* 34 */,
+/* 35 */
 /***/ (function(module, exports) {
 
 	module.exports = function isBuffer(arg) {
@@ -1211,7 +1036,7 @@ webpackJsonp([0],[
 	}
 
 /***/ }),
-/* 43 */
+/* 36 */
 /***/ (function(module, exports) {
 
 	if (typeof Object.create === 'function') {
@@ -1237,6 +1062,260 @@ webpackJsonp([0],[
 	    ctor.prototype.constructor = ctor
 	  }
 	}
+
+
+/***/ }),
+/* 37 */
+/***/ (function(module, exports) {
+
+	"use strict";
+	class LabelCls {
+	    constructor(label_success = Array(), label_warning = Array(), label_danger = Array(), label_default = Array(), label_info = Array(), label_primary = Array()) {
+	        this.label_success = label_success;
+	        this.label_warning = label_warning;
+	        this.label_danger = label_danger;
+	        this.label_default = label_default;
+	        this.label_info = label_info;
+	        this.label_primary = label_primary;
+	    }
+	    getCls(item) {
+	        if (this.label_success.some(it => it.name == item)) {
+	            return "label-success";
+	        }
+	        if (this.label_warning.some(it => it.name == item)) {
+	            return "label-warning";
+	        }
+	        if (this.label_danger.some(it => it.name == item)) {
+	            return "label-danger";
+	        }
+	        if (this.label_default.some(it => it.name == item)) {
+	            return "label-default";
+	        }
+	        if (this.label_info.some(it => it.name == item)) {
+	            return "label-info";
+	        }
+	        if (this.label_primary.some(it => it.name == item)) {
+	            return "label-primary";
+	        }
+	        return "";
+	    }
+	}
+	exports.LabelCls = LabelCls;
+
+
+/***/ }),
+/* 38 */
+/***/ (function(module, exports) {
+
+	"use strict";
+	class ListItem {
+	    constructor(content = "", plainChilds = "", converter) {
+	        this.content = content;
+	        this.plainChilds = plainChilds;
+	        this.converter = converter;
+	        this.htmlChilds = "";
+	        this.latexChilds = "";
+	        this.convertChilds();
+	    }
+	    convertChilds() {
+	        if (this.plainChilds != "") {
+	            this.htmlChilds = this.converter.makeHtml(this.plainChilds.replace(/^[\s]{3}/gm, ""));
+	            if (this.htmlChilds) {
+	                this.latexChilds = this.htmlChilds.replace(/[\s]{2}/gm, " ");
+	                this.latexChilds = this.latexChilds.replace(/[\s]/gm, " ");
+	            }
+	        }
+	    }
+	    getLabel() {
+	        return this.content + this.htmlChilds;
+	    }
+	}
+	exports.ListItem = ListItem;
+
+
+/***/ }),
+/* 39 */
+/***/ (function(module, exports) {
+
+	"use strict";
+	class Property {
+	    constructor(plain = "", text = "", list = new Array()) {
+	        this.plain = plain;
+	        this.text = text;
+	        this.list = list;
+	    }
+	}
+	exports.Property = Property;
+
+
+/***/ }),
+/* 40 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	"use strict";
+	const type_1 = __webpack_require__(41);
+	class TableData {
+	    constructor(name = "", tag = "", url = "", style = "", display = false, type = new type_1.Type(), values = {}, sort = 0, repo = false) {
+	        this.name = name;
+	        this.tag = tag;
+	        this.url = url;
+	        this.style = style;
+	        this.display = display;
+	        this.type = type;
+	        this.values = values;
+	        this.sort = sort;
+	        this.repo = repo;
+	    }
+	}
+	exports.TableData = TableData;
+
+
+/***/ }),
+/* 41 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	"use strict";
+	const labelcls_1 = __webpack_require__(37);
+	const color_dictionary_1 = __webpack_require__(42);
+	class Type {
+	    constructor(tag = "", cls = "", labelCls = new labelcls_1.LabelCls(), colors = new color_dictionary_1.ColorDictionary()) {
+	        this.tag = tag;
+	        this.cls = cls;
+	        this.labelCls = labelCls;
+	        this.colors = colors;
+	    }
+	    getCls(item) {
+	        let labelClsString = this.labelCls.getCls(item);
+	        if (this.cls == "" && labelClsString == "" && this.colors[item] === "") {
+	            return "label label-default";
+	        }
+	        else if (this.cls == "" && labelClsString == "") {
+	            return "label";
+	        }
+	        else if (labelClsString != "") {
+	            return "label " + labelClsString;
+	        }
+	        else {
+	            //quick fix for old implementations
+	            return this.cls != "label" ? this.cls : this.cls + "label-default";
+	        }
+	    }
+	}
+	exports.Type = Type;
+
+
+/***/ }),
+/* 42 */
+/***/ (function(module, exports) {
+
+	"use strict";
+	class ColorDictionary {
+	    constructor() {
+	        this.colorDict = {};
+	    }
+	    setColor(label, color) {
+	        this.colorDict[label] = color;
+	    }
+	    getColor(label) {
+	        if (this.colorDict[label]) {
+	            return this.colorDict[label];
+	        }
+	        else {
+	            return "";
+	        }
+	    }
+	}
+	exports.ColorDictionary = ColorDictionary;
+
+
+/***/ }),
+/* 43 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	"use strict";
+	const index_1 = __webpack_require__(31);
+	const color_dictionary_1 = __webpack_require__(42);
+	const util_1 = __webpack_require__(33);
+	class TableDataSet {
+	    constructor(jsonObj) {
+	        this.tableDataSet = {};
+	        this.set = new Array();
+	        this.ready = false;
+	        jsonObj.forEach(obj => {
+	            let lcls = new index_1.LabelCls();
+	            var values = {};
+	            if (obj.type.values) {
+	                obj.type.values.forEach(val => {
+	                    let value = new index_1.Value(val.name, val.description);
+	                    if (util_1.isNullOrUndefined(val["min-age"])) {
+	                        values[val.name] = val.description;
+	                    }
+	                    else {
+	                        const v = {};
+	                        v["min-age"] = val["min-age"];
+	                        v["min-age-unit"] = val["min-age-unit"];
+	                        v["max-age"] = val["max-age"];
+	                        v["max-age-unit"] = val["max-age-unit"];
+	                        v["descirption"] = val.description;
+	                        values[val.name] = v;
+	                    }
+	                    switch (val.class) {
+	                        case "label-success":
+	                            lcls.label_success.push(value);
+	                            break;
+	                        case "label-warning":
+	                            lcls.label_warning.push(value);
+	                            break;
+	                        case "label-danger":
+	                            lcls.label_danger.push(value);
+	                            break;
+	                        case "label-default":
+	                            lcls.label_default.push(value);
+	                            break;
+	                        case "label-info":
+	                            lcls.label_info.push(value);
+	                            break;
+	                        case "label-primary":
+	                            lcls.label_primary.push(value);
+	                            break;
+	                    }
+	                });
+	            }
+	            let colors = new color_dictionary_1.ColorDictionary();
+	            if (obj.type && obj.type.values) {
+	                for (const v of obj.type.values) {
+	                    if (v.color) {
+	                        colors.setColor(v.name, v.color);
+	                    }
+	                }
+	            }
+	            let type = new index_1.Type(obj.type.tag, obj.type.class, lcls, colors);
+	            let td = new index_1.TableData(obj.name, obj.tag, obj.urlTag, obj.style, obj.display, type, values, obj.sort, obj.repo);
+	            this.tableDataSet[obj.tag] = td;
+	        });
+	        this.ready = true;
+	    }
+	    getTableData(tag) {
+	        return this.tableDataSet[tag] ? this.tableDataSet[tag] : new index_1.TableData();
+	    }
+	    getTableDataArray() {
+	        let size = 0;
+	        for (let key in this.tableDataSet) {
+	            if (!this.tableDataSet.hasOwnProperty(key))
+	                continue;
+	            size++;
+	        }
+	        if (this.set.length != size) {
+	            for (let key in this.tableDataSet) {
+	                if (!this.tableDataSet.hasOwnProperty(key))
+	                    continue;
+	                this.set.push(this.tableDataSet[key]);
+	            }
+	        }
+	        return this.set;
+	    }
+	}
+	exports.TableDataSet = TableDataSet;
 
 
 /***/ }),
@@ -1527,7 +1606,7 @@ webpackJsonp([0],[
 	        this.http.request('app/components/comparison/data/data.json')
 	            .subscribe(res => {
 	            res.json().forEach(obj => {
-	                let data = new index_1.Data();
+	                let data = new index_1.Data(this.http);
 	                data.tag = obj.tag;
 	                let regArray = /^((?:(?:\w+\s*)(?:-?\s*\w+.)*)+)\s*-?\s*((?:(?:http|ftp|https)(?::\/\/)(?:[\w_-]+(?:(?:\.[\w_-]+)+))|(?:www.))(?:[\w.,@?^=%&:\/~+#-]*[\w@?^=%&\/~+#-])?)$/gi.exec(data.tag);
 	                data.url = regArray ? regArray[2] : "";
@@ -1573,7 +1652,6 @@ webpackJsonp([0],[
 	                            break;
 	                    }
 	                }
-	                ;
 	                this.data.push(data);
 	            });
 	            cd.markForCheck();
@@ -4833,9 +4911,11 @@ webpackJsonp([0],[
 	const comparison_service_1 = __webpack_require__(53);
 	const comparison_citation_service_1 = __webpack_require__(55);
 	const VersionInformation_1 = __webpack_require__(61);
+	const http_1 = __webpack_require__(29);
 	var FileSaver = __webpack_require__(62);
 	let ComparisonComponent = class ComparisonComponent {
-	    constructor(serv, dataServ, confServ, citationServ, cd) {
+	    constructor(http, serv, dataServ, confServ, citationServ, cd) {
+	        this.http = http;
 	        this.serv = serv;
 	        this.dataServ = dataServ;
 	        this.confServ = confServ;
@@ -4848,7 +4928,7 @@ webpackJsonp([0],[
 	        this.orderOption = new Array();
 	        this.ready = false;
 	        this.versionInformation = new VersionInformation_1.VersionInformation();
-	        this.activeRow = new index_1.Data();
+	        this.activeRow = new index_1.Data(this.http);
 	        this.showTable = false;
 	        this.showTableTooltips = true;
 	        this.tableTooltipsAsFootnotes = false;
@@ -4938,10 +5018,10 @@ webpackJsonp([0],[
 	        template: __webpack_require__(65),
 	        styles: [__webpack_require__(66)]
 	    }), 
-	    __metadata('design:paramtypes', [(typeof (_b = typeof comparison_service_1.ComparisonService !== 'undefined' && comparison_service_1.ComparisonService) === 'function' && _b) || Object, (typeof (_c = typeof comparison_data_service_1.ComparisonDataService !== 'undefined' && comparison_data_service_1.ComparisonDataService) === 'function' && _c) || Object, (typeof (_d = typeof comparison_config_service_1.ComparisonConfigService !== 'undefined' && comparison_config_service_1.ComparisonConfigService) === 'function' && _d) || Object, (typeof (_e = typeof comparison_citation_service_1.ComparisonCitationService !== 'undefined' && comparison_citation_service_1.ComparisonCitationService) === 'function' && _e) || Object, (typeof (_f = typeof core_1.ChangeDetectorRef !== 'undefined' && core_1.ChangeDetectorRef) === 'function' && _f) || Object])
+	    __metadata('design:paramtypes', [(typeof (_b = typeof http_1.Http !== 'undefined' && http_1.Http) === 'function' && _b) || Object, (typeof (_c = typeof comparison_service_1.ComparisonService !== 'undefined' && comparison_service_1.ComparisonService) === 'function' && _c) || Object, (typeof (_d = typeof comparison_data_service_1.ComparisonDataService !== 'undefined' && comparison_data_service_1.ComparisonDataService) === 'function' && _d) || Object, (typeof (_e = typeof comparison_config_service_1.ComparisonConfigService !== 'undefined' && comparison_config_service_1.ComparisonConfigService) === 'function' && _e) || Object, (typeof (_f = typeof comparison_citation_service_1.ComparisonCitationService !== 'undefined' && comparison_citation_service_1.ComparisonCitationService) === 'function' && _f) || Object, (typeof (_g = typeof core_1.ChangeDetectorRef !== 'undefined' && core_1.ChangeDetectorRef) === 'function' && _g) || Object])
 	], ComparisonComponent);
 	exports.ComparisonComponent = ComparisonComponent;
-	var _a, _b, _c, _d, _e, _f;
+	var _a, _b, _c, _d, _e, _f, _g;
 
 
 /***/ }),
@@ -4951,9 +5031,9 @@ webpackJsonp([0],[
 	"use strict";
 	class VersionInformation {
 	    constructor() {
-	        this.date = "2017-06-22";
-	        this.commit = "cb09a0151289c1981063219825cf5aeeed134b5d";
-	        this.link = "https://github.com/ultimate-comparisons/ultimate-comparison-BASE/commit/cb09a0151289c1981063219825cf5aeeed134b5d";
+	        this.date = "2017-06-28";
+	        this.commit = "afc8efcafa29c2e89182d3817e99e5beca52d18f";
+	        this.link = "https://github.com/ultimate-comparisons/ultimate-comparison-BASE/commit/afc8efcafa29c2e89182d3817e99e5beca52d18f";
 	    }
 	}
 	exports.VersionInformation = VersionInformation;
@@ -13762,7 +13842,6 @@ webpackJsonp([0],[
 	const comparison_citation_service_1 = __webpack_require__(55);
 	const comparison_config_service_1 = __webpack_require__(51);
 	const platform_browser_1 = __webpack_require__(21);
-	const util_1 = __webpack_require__(40);
 	const http_1 = __webpack_require__(29);
 	let GenericTableComponent = class GenericTableComponent {
 	    constructor(ar, confServ, sanitization, http, cd) {
@@ -13785,74 +13864,7 @@ webpackJsonp([0],[
 	        this.orderChange = new core_1.EventEmitter();
 	        this.orderOption = new Array();
 	        this.orderOptionChange = new core_1.EventEmitter();
-	        this.repoLabels = {};
 	        this.ctrlCounter = 0;
-	    }
-	    getRepoLabels(td, data) {
-	        if (util_1.isNullOrUndefined(data.properties["Repo"]) || util_1.isNullOrUndefined(data.properties["Repo"].list[0])) {
-	            return [];
-	        }
-	        if (!util_1.isNullOrUndefined(this.repoLabels[data.tag])) {
-	            return this.repoLabels[data.tag];
-	        }
-	        const repoUrl = data.properties["Repo"].list[0].content;
-	        const url = this.repoQueryBuildUrl(repoUrl);
-	        if (url === "") {
-	            return [];
-	        }
-	        this.http.get(url).toPromise().then(res => {
-	            const d = {};
-	            const commitDate = new Date(res.json()[0].commit.author.date);
-	            let child = "The last commit is ";
-	            const cd = moment(commitDate);
-	            const now = moment();
-	            const dateStrings = ['years', 'months', 'days', 'hours', 'minutes', 'seconds'];
-	            for (const s of dateStrings) {
-	                const diff = Math.abs(now.diff(cd, s));
-	                if (diff !== 0) {
-	                    child += diff;
-	                    // append unit in singular or plural
-	                    child += " " + (diff === 1 ? s.substr(0, s.length - 1) : s);
-	                    break;
-	                }
-	            }
-	            child += " old";
-	            d.htmlChilds = child;
-	            for (const value in td.values) {
-	                if (util_1.isNullOrUndefined(td.values[value]["min-age"])) {
-	                    continue;
-	                }
-	                const min = td.values[value]["min-age"];
-	                const minUnit = td.values[value]["min-age-unit"];
-	                const minDiff = Math.abs(now.diff(cd, minUnit));
-	                const max = td.values[value]["max-age"];
-	                const maxUnit = td.values[value]["max-age-unit"];
-	                const maxDiff = Math.abs(now.diff(cd, maxUnit));
-	                // min === -1 => no limit
-	                // same for max
-	                if ((min === -1 || min <= minDiff) && (max === -1 || max > maxDiff)) {
-	                    d.content = value;
-	                    if (util_1.isNullOrUndefined(this.repoLabels[data.tag])) {
-	                        this.repoLabels[data.tag] = [];
-	                    }
-	                    for (const item of this.repoLabels[data.tag]) {
-	                        if (item.content === d.content) {
-	                            this.repoLabels[data.tag].splice(this.repoLabels[data.tag].indexOf(item), 1);
-	                        }
-	                    }
-	                    this.repoLabels[data.tag].push(d);
-	                }
-	            }
-	            this.cd.markForCheck();
-	        });
-	    }
-	    repoQueryBuildUrl(repoUrl) {
-	        let url;
-	        if (/https?:\/\/github\.com.*/.test(repoUrl)) {
-	            url = repoUrl.replace(/https?:\/\/github.com/, "https://api.github.com/repos");
-	            url += url.endsWith("/") ? "commits" : "/commits";
-	        }
-	        return url;
 	    }
 	    orderClick(e, value) {
 	        let pos = this.order.findIndex(name => name == value);
@@ -13978,10 +13990,6 @@ webpackJsonp([0],[
 	    core_1.Output(), 
 	    __metadata('design:type', (typeof (_e = typeof core_1.EventEmitter !== 'undefined' && core_1.EventEmitter) === 'function' && _e) || Object)
 	], GenericTableComponent.prototype, "orderOptionChange", void 0);
-	__decorate([
-	    core_1.Output(), 
-	    __metadata('design:type', Object)
-	], GenericTableComponent.prototype, "repoLabels", void 0);
 	GenericTableComponent = __decorate([
 	    core_1.Component({
 	        selector: 'generictable',
@@ -13999,7 +14007,7 @@ webpackJsonp([0],[
 /* 121 */
 /***/ (function(module, exports) {
 
-	module.exports = "<table class=\"table table-hover\" *ngIf=\"display\">\n    <thead style=\"background-color: white;\">\n    <tr>\n        <template ngFor let-column [ngForOf]=\"columns | tablefilter\">\n            <th valign=column.valign style=column.style name=column.tag>\n                <button (click)=\"orderClick($event, column.tag)\">{{column.name}}\n                    <iicon icon=\"keyboard-arrow-up\" *ngIf=\"displayOrder(column.tag, -1)\"></iicon>\n                    <iicon icon=\"keyboard-arrow-down\" *ngIf=\"displayOrder(column.tag, 1)\"></iicon>\n                </button>\n            </th>\n        </template>\n        <th style=\"width: 3%\" name=\"details\" *ngIf=\"settings\">\n            <picon-button icon=\"settings\" title=\"Settings\" (click)=\"settingsCallback.emit()\"></picon-button>\n        </th>\n    </tr>\n    </thead>\n    <tbody>\n    <template ngFor let-dat [ngForOf]=\"data | orderBy: [order,orderOption] | datafilter: [query, displayTemplate]\">\n        <tr *ngIf=\"shouldBeShown(dat)\">\n            <template ngFor let-column [ngForOf]=\"columns | tablefilter\">\n                <td *ngIf=\"column.type?.tag==='url'\"><a class=\"anchored\" href=\"{{dat.getProperty(column.url).text}}\" target=\"_blank\">{{dat.getProperty(column.tag).text}}</a>\n                </td>\n                <td *ngIf=\"column.type?.tag==='text'\">\n                    <div [innerHtml]=\"dat.getProperty(column.tag).text|citation: [citationServ] | sanitizeHtml\"></div>\n                </td>\n                <td *ngIf=\"column.type?.tag==='label' && !column.repo\">\n                    <template ngFor let-sitem [ngForOf]=\"dat.getPropertyListItems(column.tag)\"\n                              *ngIf=\"column.type?.labelCls\">\n                        <ptooltip [tooltip]=\"column.values[sitem.content]\"\n                                  [tooltipHtml]=\"sitem.htmlChilds | citation: [citationServ]\" [position]=\"'n'\">\n                            <div *ngIf=\"(column.type.colors | json) == '{}'\" class=\"{{column.type.getCls(sitem.content)}} {{column.type.labelCls.getCls(sitem.content)}} mylabel\">\n                                {{sitem.content}}\n                            </div>\n                            <div *ngIf=\"(column.type.colors | json) != '{}'\" [style.background-color]=\"getColor(column, sitem.content)\" class=\"{{column.type.getCls(sitem.content)}} {{column.type.labelCls.getCls(sitem.content)}} mylabel\">\n                                {{sitem.content}}\n                            </div>\n                        </ptooltip>\n                    </template>\n                </td>\n                <td *ngIf=\"column.type?.tag==='label' && column.repo\">\n                    <template ngFor let-sitem [ngForOf]=\"getRepoLabels(column, dat)\"\n                              *ngIf=\"column.type?.labelCls\">\n                        <ptooltip [tooltipHtml]=\"sitem.htmlChilds\" [position]=\"'n'\">\n                            <div *ngIf=\"(column.type.colors | json) == '{}'\" class=\"{{column.type.getCls(sitem.content)}} {{column.type.labelCls.getCls(sitem.content)}} mylabel\">\n                                {{sitem.content}}\n                            </div>\n                            <div *ngIf=\"(column.type.colors | json) != '{}'\" [style.background-color]=\"getColor(column, sitem.content)\" class=\"{{column.type.getCls(sitem.content)}} {{column.type.labelCls.getCls(sitem.content)}} mylabel\">\n                                {{sitem.content}}\n                            </div>\n                        </ptooltip>\n                    </template>\n                </td>\n                <td *ngIf=\"column.type?.tag=='rating'\">\n                    <iicon icon=\"star\" *ngIf=\"dat.getRating()!=0\">{{dat.getRating()}}</iicon>\n                </td>\n            </template>\n            <td>\n                <picon-button icon=\"info\" title=\"Details\" (click)=\"showDetails.emit(dat)\"></picon-button>\n            </td>\n        </tr>\n    </template>\n    </tbody>\n</table>\n        ";
+	module.exports = "<table class=\"table table-hover\" *ngIf=\"display\">\n    <thead style=\"background-color: white;\">\n    <tr>\n        <template ngFor let-column [ngForOf]=\"columns | tablefilter\">\n            <th valign=column.valign style=column.style name=column.tag>\n                <button (click)=\"orderClick($event, column.tag)\">{{column.name}}\n                    <iicon icon=\"keyboard-arrow-up\" *ngIf=\"displayOrder(column.tag, -1)\"></iicon>\n                    <iicon icon=\"keyboard-arrow-down\" *ngIf=\"displayOrder(column.tag, 1)\"></iicon>\n                </button>\n            </th>\n        </template>\n        <th style=\"width: 3%\" name=\"details\" *ngIf=\"settings\">\n            <picon-button icon=\"settings\" title=\"Settings\" (click)=\"settingsCallback.emit()\"></picon-button>\n        </th>\n    </tr>\n    </thead>\n    <tbody>\n    <template ngFor let-dat [ngForOf]=\"data | orderBy: [order,orderOption] | datafilter: [query, displayTemplate]\">\n        <tr *ngIf=\"shouldBeShown(dat)\">\n            <template ngFor let-column [ngForOf]=\"columns | tablefilter\">\n                <td *ngIf=\"column.type?.tag==='url'\"><a class=\"anchored\" href=\"{{dat.getProperty(column.url).text}}\" target=\"_blank\">{{dat.getProperty(column.tag).text}}</a>\n                </td>\n                <td *ngIf=\"column.type?.tag==='text'\">\n                    <div [innerHtml]=\"dat.getProperty(column.tag).text|citation: [citationServ] | sanitizeHtml\"></div>\n                </td>\n                <td *ngIf=\"column.type?.tag==='label' && !column.repo\">\n                    <template ngFor let-sitem [ngForOf]=\"dat.getPropertyListItems(column.tag)\"\n                              *ngIf=\"column.type?.labelCls\">\n                        <ptooltip [tooltip]=\"column.values[sitem.content]\"\n                                  [tooltipHtml]=\"sitem.htmlChilds | citation: [citationServ]\" [position]=\"'n'\">\n                            <div *ngIf=\"(column.type.colors | json) == '{}'\" class=\"{{column.type.getCls(sitem.content)}} {{column.type.labelCls.getCls(sitem.content)}} mylabel\">\n                                {{sitem.content}}\n                            </div>\n                            <div *ngIf=\"(column.type.colors | json) != '{}'\" [style.background-color]=\"getColor(column, sitem.content)\" class=\"{{column.type.getCls(sitem.content)}} {{column.type.labelCls.getCls(sitem.content)}} mylabel\">\n                                {{sitem.content}}\n                            </div>\n                        </ptooltip>\n                    </template>\n                </td>\n                <td *ngIf=\"column.type?.tag==='label' && column.repo\">\n                    <template ngFor let-sitem [ngForOf]=\"dat.getRepoLabels(column).list\"\n                              *ngIf=\"column.type?.labelCls\">\n                        <ptooltip [tooltipHtml]=\"sitem.htmlChilds\" [position]=\"'n'\">\n                            <div *ngIf=\"(column.type.colors | json) == '{}'\" class=\"{{column.type.getCls(sitem.content)}} {{column.type.labelCls.getCls(sitem.content)}} mylabel\">\n                                {{sitem.content}}\n                            </div>\n                            <div *ngIf=\"(column.type.colors | json) != '{}'\" [style.background-color]=\"getColor(column, sitem.content)\" class=\"{{column.type.getCls(sitem.content)}} {{column.type.labelCls.getCls(sitem.content)}} mylabel\">\n                                {{sitem.content}}\n                            </div>\n                        </ptooltip>\n                    </template>\n                </td>\n                <td *ngIf=\"column.type?.tag=='rating'\">\n                    <iicon icon=\"star\" *ngIf=\"dat.getRating()!=0\">{{dat.getRating()}}</iicon>\n                </td>\n            </template>\n            <td>\n                <picon-button icon=\"info\" title=\"Details\" (click)=\"showDetails.emit(dat)\"></picon-button>\n            </td>\n        </tr>\n    </template>\n    </tbody>\n</table>\n        ";
 
 /***/ }),
 /* 122 */
@@ -14063,4 +14071,4 @@ webpackJsonp([0],[
 
 /***/ })
 ]);
-//# sourceMappingURL=app.47fc8682e50d575f5a9c.js.map
+//# sourceMappingURL=app.8f417d555d7de7edaed4.js.map
