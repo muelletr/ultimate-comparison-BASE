@@ -292,13 +292,13 @@
       }
     },
     "Showcase 2.0": {
-      "plain": "- green\n- green\n- grey\n",
+      "plain": "- red 1\n- green\n- grey\n- green\n",
       "childs": {
         "0": [
           [
             {
-              "content": "green",
-              "plain": "green\n",
+              "content": "red 1",
+              "plain": "red 1\n",
               "plainChilds": "",
               "childs": []
             },
@@ -311,6 +311,12 @@
             {
               "content": "grey",
               "plain": "grey\n",
+              "plainChilds": "",
+              "childs": []
+            },
+            {
+              "content": "green",
+              "plain": "green\n",
               "plainChilds": "",
               "childs": []
             }
