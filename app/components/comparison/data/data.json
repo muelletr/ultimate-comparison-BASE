@@ -88,21 +88,6 @@
           ]
         ]
       }
-    },
-    "Repo": {
-      "plain": "- https://github.com/ultimate-comparisons/ultimate-comparison-BASE\n",
-      "childs": {
-        "0": [
-          [
-            {
-              "content": "https://github.com/ultimate-comparisons/ultimate-comparison-BASE",
-              "plain": "https://github.com/ultimate-comparisons/ultimate-comparison-BASE\n",
-              "plainChilds": "",
-              "childs": []
-            }
-          ]
-        ]
-      }
     }
   },
   {
@@ -181,21 +166,6 @@
             {
               "content": "color 3",
               "plain": "color 3\n",
-              "plainChilds": "",
-              "childs": []
-            }
-          ]
-        ]
-      }
-    },
-    "Repo": {
-      "plain": "- https://github.com/ultimate-comparisons/ultimate-deployment-tool-comparison\n",
-      "childs": {
-        "0": [
-          [
-            {
-              "content": "https://github.com/ultimate-comparisons/ultimate-deployment-tool-comparison",
-              "plain": "https://github.com/ultimate-comparisons/ultimate-deployment-tool-comparison\n",
               "plainChilds": "",
               "childs": []
             }
@@ -286,21 +256,6 @@
           ]
         ]
       }
-    },
-    "Repo": {
-      "plain": "- https://github.com/ultimate-comparisons/ultimate-IoT-platform-comparison\n",
-      "childs": {
-        "0": [
-          [
-            {
-              "content": "https://github.com/ultimate-comparisons/ultimate-IoT-platform-comparison",
-              "plain": "https://github.com/ultimate-comparisons/ultimate-IoT-platform-comparison\n",
-              "plainChilds": "",
-              "childs": []
-            }
-          ]
-        ]
-      }
     }
   },
   {
@@ -379,21 +334,6 @@
             {
               "content": "color 1",
               "plain": "color 1\n",
-              "plainChilds": "",
-              "childs": []
-            }
-          ]
-        ]
-      }
-    },
-    "Repo": {
-      "plain": "- https://github.com/SitOPT/SitOPT-Installation-Script\n",
-      "childs": {
-        "0": [
-          [
-            {
-              "content": "https://github.com/SitOPT/SitOPT-Installation-Script",
-              "plain": "https://github.com/SitOPT/SitOPT-Installation-Script\n",
               "plainChilds": "",
               "childs": []
             }
