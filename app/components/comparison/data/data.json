@@ -577,6 +577,36 @@
           ]
         ]
       }
+    },
+    "Uncolored": {
+      "plain": "- color 1\n",
+      "childs": {
+        "0": [
+          [
+            {
+              "content": "color 1",
+              "plain": "color 1\n",
+              "plainChilds": "",
+              "childs": []
+            }
+          ]
+        ]
+      }
+    },
+    "NumberColumn": {
+      "plain": "- 200\n",
+      "childs": {
+        "0": [
+          [
+            {
+              "content": "200",
+              "plain": "200\n",
+              "plainChilds": "",
+              "childs": []
+            }
+          ]
+        ]
+      }
     }
   }
 ]
