@@ -12,6 +12,7 @@ import { TableData, Data, CriteriaSelection } from "./../../comparison/shared/in
 import { ComparisonCitationService } from "./../../comparison/components/comparison-citation.service";
 import { ComparisonConfigService } from "../../comparison/components/comparison-config.service";
 import { DomSanitizer, SafeHtml } from "@angular/platform-browser";
+
 declare let anchors;
 
 @Component({
@@ -29,7 +30,7 @@ export class GenericTableComponent implements AfterViewChecked, OnChanges {
     @Input() columns: Array<TableData> = new Array<TableData>();
 
     @Input() data: Array<Data> = new Array<Data>();
-    @Input() query: {[name: string]: CriteriaSelection;} = {};
+    @Input() query: { [name: string]: CriteriaSelection; } = {};
     @Input() displayTemplate: boolean = false;
 
     @Input() citationServ: ComparisonCitationService;
@@ -121,5 +122,54 @@ export class GenericTableComponent implements AfterViewChecked, OnChanges {
 
     public getColor(column: TableData, label: string): SafeHtml {
         return this.sanitization.bypassSecurityTrustStyle(column.type.colors.getColor(label));
+    }
+
+    public getColoredShadow(column: TableData, label: string): SafeHtml {
+        let dcolor = this.getTintedColor(column.type.colors.getColor(label), -100);
+        return this.sanitization.bypassSecurityTrustStyle('-1px -1px 1px' + dcolor
+            + ', 1px -1px 1px' + dcolor
+            + ', -1px 1px 1px' + dcolor
+            + ', 1px 1px 1px' + dcolor
+            + ', 1px 0px 1px' + dcolor
+            + ', 0px 1px ' + dcolor
+            + ', -1px 0px 1px' + dcolor
+            + ', 0px -1px 1px ' + dcolor);
+    }
+
+    private getTintedColor(color, v) {
+        if (color.length > 6) {
+            color = color.substring(1, color.length)
+        }
+        let rgb = parseInt(color, 16);
+
+        let rNum = Math.abs(((rgb >> 16) & 0xFF) + v);
+        if (rNum > 255) {
+            rNum = rNum - (rNum - 255)
+        }
+
+        let gNum = Math.abs(((rgb >> 8) & 0xFF) + v);
+        if (gNum > 255) {
+            gNum = gNum - (gNum - 255)
+        }
+
+        let bNum = Math.abs((rgb & 0xFF) + v);
+        if (bNum > 255) {
+            bNum = bNum - (bNum - 255)
+        }
+
+        let r = Number(rNum < 0 || isNaN(rNum)) ? '0' : ((rNum > 255) ? 255 : rNum).toString(16);
+        if (r.length == 1) {
+            r = '0' + rNum
+        }
+
+        let g = Number(gNum < 0 || isNaN(gNum)) ? '0' : ((gNum > 255) ? 255 : gNum).toString(16);
+        if (g.length == 1) {
+            g = '0' + g
+        }
+
+        let b = Number(bNum < 0 || isNaN(bNum)) ? '0' : ((bNum > 255) ? 255 : bNum).toString(16);
+        if (b.length == 1) b = '0' + b;
+
+        return "#" + r + g + b;
     }
 }
