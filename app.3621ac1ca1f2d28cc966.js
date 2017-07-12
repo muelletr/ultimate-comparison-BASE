@@ -4960,9 +4960,9 @@ webpackJsonp([0],[
 	"use strict";
 	class VersionInformation {
 	    constructor() {
-	        this.date = "2017-07-07";
-	        this.commit = "1105f4e2ea06e52c2cf07ba9e3299ebfa118c1e7";
-	        this.link = "https://github.com/ultimate-comparisons/ultimate-comparison-BASE/commit/1105f4e2ea06e52c2cf07ba9e3299ebfa118c1e7";
+	        this.date = "2017-07-12";
+	        this.commit = "30bf42b547e4990130ffa2f44db002c0642bde36";
+	        this.link = "https://github.com/ultimate-comparisons/ultimate-comparison-BASE/commit/30bf42b547e4990130ffa2f44db002c0642bde36";
 	    }
 	}
 	exports.VersionInformation = VersionInformation;
@@ -14005,18 +14005,13 @@ webpackJsonp([0],[
 	    }
 	    getForegroundColor(color) {
 	        const h = Number.parseInt(color["changingThisBreaksApplicationSecurity"].substr(4, 3).split(',')[0]);
-	        const s = 100;
-	        const l = 88;
+	        const s = 1;
+	        const l = 0.7;
 	        const rgb = this.hslToRgb(h, s, l);
 	        const yiq = ((rgb[0] * 299) + (rgb[1] * 587) + (rgb[2] * 114)) / 1000;
-	        return this.sanitization.bypassSecurityTrustStyle((yiq >= 128) ? 'black' : 'white');
+	        return this.sanitization.bypassSecurityTrustStyle((yiq >= 128) ? '#0d0d0d' : '#f0f0f0');
 	    }
 	    hslToRgb(h, s, l) {
-	        // fix values: 0<=h<360, 0<=s<=1, 0<=l<=1
-	        h = h % 360;
-	        s = s > 1 ? s / 100 : s;
-	        l = l > 1 ? l / 100 : l;
-	        // algorithm according to http://www.rapidtables.com/convert/color/hsl-to-rgb.htm
 	        const c = (1 - Math.abs(2 * l - 1)) * s;
 	        const x = c * (1 - Math.abs((h / 60) % 2 - 1));
 	        const m = l - c / 2;
@@ -14191,4 +14186,4 @@ webpackJsonp([0],[
 
 /***/ })
 ]);
-//# sourceMappingURL=app.68e0e6383fd185d7462e.js.map
+//# sourceMappingURL=app.3621ac1ca1f2d28cc966.js.map
