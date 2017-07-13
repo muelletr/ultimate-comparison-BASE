@@ -169,31 +169,31 @@
                     "name": 100,
                     "description": 100,
                     "weight": 1,
-                    "color": "#EA3711"
+                    "color": "hsl(90, 100%, 88%)"
                 },
                 {
                     "name": 200,
                     "description": 200,
                     "weight": 2,
-                    "color": "#11EAD3"
+                    "color": "hsl(165, 100%, 88%)"
                 },
                 {
                     "name": 250,
                     "description": 250,
                     "weight": 3,
-                    "color": "#4F11EA"
+                    "color": "hsl(240, 100%, 88%)"
                 },
                 {
                     "name": 300,
                     "description": 300,
                     "weight": 4,
-                    "color": "#EA6311"
+                    "color": "hsl(315, 100%, 88%)"
                 },
                 {
                     "name": 199,
                     "description": 199,
                     "weight": 1.99,
-                    "color": "#C6EA11"
+                    "color": "hsl(30, 100%, 88%)"
                 }
             ]
         }

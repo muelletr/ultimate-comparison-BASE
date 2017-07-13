@@ -4961,8 +4961,8 @@ webpackJsonp([0],[
 	class VersionInformation {
 	    constructor() {
 	        this.date = "2017-07-13";
-	        this.commit = "622ba77b473290a30e22ff14a916ea438decdd04";
-	        this.link = "https://github.com/ultimate-comparisons/ultimate-comparison-BASE/commit/622ba77b473290a30e22ff14a916ea438decdd04";
+	        this.commit = "3fa9e308b843d2b15f9305b2ef25ad030c1baaaa";
+	        this.link = "https://github.com/ultimate-comparisons/ultimate-comparison-BASE/commit/3fa9e308b843d2b15f9305b2ef25ad030c1baaaa";
 	    }
 	}
 	exports.VersionInformation = VersionInformation;
@@ -13483,6 +13483,9 @@ webpackJsonp([0],[
 	        this.positionClass = p;
 	    }
 	    ngOnInit() {
+	        if (typeof this.tooltip === "number") {
+	            this.tooltip = this.tooltip.toString();
+	        }
 	        if (this.tooltip.indexOf("<") > -1 && this.tooltip.indexOf(">") > -1) {
 	            const tokens = this.tooltip.split(/[ ,\n\r]/);
 	            let tip = this.tooltip;
@@ -14190,4 +14193,4 @@ webpackJsonp([0],[
 
 /***/ })
 ]);
-//# sourceMappingURL=app.a15c2e1c648d56a257ac.js.map
+//# sourceMappingURL=app.c0cf338fd92554ce2e7c.js.map
