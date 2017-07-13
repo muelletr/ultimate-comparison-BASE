@@ -4960,9 +4960,9 @@ webpackJsonp([0],[
 	"use strict";
 	class VersionInformation {
 	    constructor() {
-	        this.date = "2017-07-12";
-	        this.commit = "30bf42b547e4990130ffa2f44db002c0642bde36";
-	        this.link = "https://github.com/ultimate-comparisons/ultimate-comparison-BASE/commit/30bf42b547e4990130ffa2f44db002c0642bde36";
+	        this.date = "2017-07-13";
+	        this.commit = "527ba3c135001d77f2131ca4e2ebe90f7517f680";
+	        this.link = "https://github.com/ultimate-comparisons/ultimate-comparison-BASE/commit/527ba3c135001d77f2131ca4e2ebe90f7517f680";
 	    }
 	}
 	exports.VersionInformation = VersionInformation;
@@ -14009,7 +14009,7 @@ webpackJsonp([0],[
 	        const l = 0.7;
 	        const rgb = this.hslToRgb(h, s, l);
 	        const yiq = ((rgb[0] * 299) + (rgb[1] * 587) + (rgb[2] * 114)) / 1000;
-	        return this.sanitization.bypassSecurityTrustStyle((yiq >= 128) ? '#0d0d0d' : '#f0f0f0');
+	        return this.sanitization.bypassSecurityTrustStyle((yiq >= 128) ? '#f0f0f0' : '#0d0d0d');
 	    }
 	    hslToRgb(h, s, l) {
 	        const c = (1 - Math.abs(2 * l - 1)) * s;
@@ -14186,4 +14186,4 @@ webpackJsonp([0],[
 
 /***/ })
 ]);
-//# sourceMappingURL=app.3621ac1ca1f2d28cc966.js.map
+//# sourceMappingURL=app.641e3da186e602b8f6a1.js.map
