@@ -36,14 +36,14 @@
             "tag": "label",
             "values": [
                 {
-                    "name": "slow",
-                    "description": "Overall performance above 200ms.",
-                    "class": "label-danger"
-                },
-                {
                     "name": "fast",
                     "description": "Overall performance below 200ms.",
                     "class": "label-success"
+                },
+                {
+                    "name": "slow",
+                    "description": "Overall performance above 200ms.",
+                    "class": "label-danger"
                 }
             ]
         }
@@ -57,19 +57,16 @@
             "class": "label label-info",
             "values": [
                 {
-                    "name": "MIT",
-                    "description": "<http://choosealicense.com/licenses/mit/>",
-                    "color": "hsl(000, 100%, 88%)"
+                    "name": "Apache 2.0",
+                    "description": "http://choosealicense.com/licenses/apache-2.0/"
                 },
                 {
-                    "name": "Apache 2.0",
-                    "description": "http://choosealicense.com/licenses/apache-2.0/",
-                    "color": "hsl(75, 100%, 88%)"
+                    "name": "MIT",
+                    "description": "<http://choosealicense.com/licenses/mit/>"
                 },
                 {
                     "name": "MPL 2.0",
-                    "description": "http://choosealicense.com/licenses/mpl-2.0/",
-                    "color": "hsl(150, 100%, 88%)"
+                    "description": "http://choosealicense.com/licenses/mpl-2.0/"
                 }
             ]
         }
@@ -84,34 +81,10 @@
             "tag": "label",
             "values": [
                 {
-                    "name": "red 1",
-                    "description": "Show case for red label 1",
-                    "class": "label-danger",
-                    "weight": 1
-                },
-                {
-                    "name": "red 2",
-                    "description": "Show case for red label 2",
-                    "class": "label-danger",
-                    "weight": 2
-                },
-                {
-                    "name": "green",
-                    "description": "Show case for green label",
-                    "class": "label-success",
-                    "weight": 3
-                },
-                {
-                    "name": "yellow",
-                    "description": "Show case for yellow label",
-                    "class": "label-warning",
-                    "weight": 4
-                },
-                {
-                    "name": "dark blue",
-                    "description": "Show case for dark blue label",
-                    "class": "label-primary",
-                    "weight": 5
+                    "name": "light blue",
+                    "description": "",
+                    "class": "label-info",
+                    "weight": 7
                 },
                 {
                     "name": "grey",
@@ -120,10 +93,34 @@
                     "weight": 6
                 },
                 {
-                    "name": "light blue",
-                    "description": "",
-                    "class": "label-info",
-                    "weight": 7
+                    "name": "dark blue",
+                    "description": "Show case for dark blue label",
+                    "class": "label-primary",
+                    "weight": 5
+                },
+                {
+                    "name": "yellow",
+                    "description": "Show case for yellow label",
+                    "class": "label-warning",
+                    "weight": 4
+                },
+                {
+                    "name": "green",
+                    "description": "Show case for green label",
+                    "class": "label-success",
+                    "weight": 3
+                },
+                {
+                    "name": "red 2",
+                    "description": "Show case for red label 2",
+                    "class": "label-danger",
+                    "weight": 2
+                },
+                {
+                    "name": "red 1",
+                    "description": "Show case for red label 1",
+                    "class": "label-danger",
+                    "weight": 1
                 }
             ]
         }
@@ -139,20 +136,17 @@
                 {
                     "name": "color 1",
                     "description": "Color 1",
-                    "weight": 1,
-                    "color": "hsl(225, 100%, 88%)"
+                    "weight": 1
                 },
                 {
                     "name": "color 2",
                     "description": "Color 2",
-                    "weight": 2,
-                    "color": "hsl(300, 100%, 88%)"
+                    "weight": 2
                 },
                 {
                     "name": "color 3",
                     "description": "Color 3",
-                    "weight": 3,
-                    "color": "hsl(15, 100%, 88%)"
+                    "weight": 3
                 }
             ]
         }
@@ -168,32 +162,27 @@
                 {
                     "name": 100,
                     "description": 100,
-                    "weight": 1,
-                    "color": "hsl(90, 100%, 88%)"
-                },
-                {
-                    "name": 200,
-                    "description": 200,
-                    "weight": 2,
-                    "color": "hsl(165, 100%, 88%)"
-                },
-                {
-                    "name": 250,
-                    "description": 250,
-                    "weight": 3,
-                    "color": "hsl(240, 100%, 88%)"
-                },
-                {
-                    "name": 300,
-                    "description": 300,
-                    "weight": 4,
-                    "color": "hsl(315, 100%, 88%)"
+                    "weight": 1
                 },
                 {
                     "name": 199,
                     "description": 199,
-                    "weight": 1.99,
-                    "color": "hsl(30, 100%, 88%)"
+                    "weight": 1.99
+                },
+                {
+                    "name": 200,
+                    "description": 200,
+                    "weight": 2
+                },
+                {
+                    "name": 250,
+                    "description": 250,
+                    "weight": 3
+                },
+                {
+                    "name": 300,
+                    "description": 300,
+                    "weight": 4
                 }
             ]
         }
